@@ -1,0 +1,70 @@
+/* Фрагменты повторяют типографику заголовка и не меняют его размеры. */
+.brick-title-line {
+  position: relative;
+  width: max-content;
+  white-space: nowrap;
+  color: #fff;
+}
+.brick-title-accent {
+  color: var(--orange);
+}
+.hero h1 .brick-title-source {
+  color: inherit;
+}
+.brick-title.is-building .brick-title-source {
+  opacity: 0;
+}
+.brick-title-pieces {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.brick-title-piece {
+  position: absolute;
+  inset: 0;
+  color: inherit;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.brick-title-piece::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  opacity: 0;
+}
+.brick-title.is-ready .brick-title-piece {
+  animation: brick-title-assemble 720ms cubic-bezier(.22, 1, .36, 1) var(--brick-delay) both;
+}
+.brick-title.is-ready .brick-title-piece::before {
+  animation: brick-title-mortar 720ms ease-out var(--brick-delay) both;
+}
+@keyframes brick-title-assemble {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--brick-x), var(--brick-y), 0);
+  }
+  30% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes brick-title-mortar {
+  from {
+    opacity: .16;
+  }
+  65%, to {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brick-title.is-building .brick-title-source {
+    opacity: 1;
+  }
+  .brick-title-pieces {
+    display: none;
+  }
+}

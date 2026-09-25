@@ -1,0 +1,73 @@
+/* Каска заменяет курсор только над ссылками и кнопками. */
+@media (hover: hover) and (pointer: fine) {
+  html.helmet-cursor-active,
+  html.helmet-cursor-active * {
+    cursor: none !important;
+  }
+}
+.helmet-cursor-host {
+  pointer-events: none;
+}
+.helmet-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2147483647;
+  width: 34px;
+  height: 30px;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  color: #f4bf46;
+  will-change: transform;
+  transition: color 180ms ease;
+}
+.helmet-cursor.is-visible {
+  opacity: 1;
+}
+.helmet-cursor-offset {
+  transform: translate(-50%, -50%);
+  transition: scale 120ms ease;
+}
+.helmet-cursor-icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 2px 2px #07123040);
+  transform-origin: 50% 75%;
+}
+.helmet-cursor.is-interactive {
+  color: #f56300;
+}
+.helmet-cursor.is-nodding .helmet-cursor-icon {
+  animation: helmet-cursor-nod 420ms ease-in-out;
+}
+.helmet-cursor.is-pressed .helmet-cursor-offset {
+  scale: .88;
+}
+@keyframes helmet-cursor-nod {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  35% {
+    transform: rotate(-14deg);
+  }
+  70% {
+    transform: rotate(7deg);
+  }
+}
+@media (hover: none), (pointer: coarse), (any-pointer: coarse) {
+  .helmet-cursor {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .helmet-cursor,
+  .helmet-cursor-offset {
+    transition: none;
+  }
+  .helmet-cursor.is-nodding .helmet-cursor-icon {
+    animation: none;
+  }
+}
