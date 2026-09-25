@@ -1,0 +1,27 @@
+/* Появление сверху вниз. Место под контент сохраняется, страница не прыгает. */
+.scroll-reveal {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 650ms ease var(--reveal-delay, 0ms),
+    transform 650ms cubic-bezier(.22, 1, .36, 1) var(--reveal-delay, 0ms);
+}
+.scroll-reveal.scroll-reveal-pending {
+  opacity: 0;
+  transform: translateY(-28px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal.scroll-reveal-pending {
+    opacity: 1;
+    transform: none;
+  }
+  .scroll-reveal {
+    transition: none;
+  }
+}
+@media print {
+  .scroll-reveal.scroll-reveal-pending {
+    opacity: 1;
+    transform: none;
+  }
+}
