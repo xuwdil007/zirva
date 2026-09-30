@@ -10,7 +10,7 @@ export default function Hero() {
     >
       <div
         className="hero-photo"
-        style={{ backgroundImage: `url("${asset("images.hero")}")` }}
+        style={{ "--hero-image": `url("${asset("images.hero")}")` }}
       />
       <div className="hero-grid" />
       <div className="container hero-content">

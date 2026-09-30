@@ -128,7 +128,7 @@ try {
   await site.reload();
   await expect
     .poll(() =>
-      site.locator(".hero-photo").evaluate((el) => el.style.backgroundImage),
+      site.locator(".hero-photo").evaluate((el) => getComputedStyle(el).backgroundImage),
     )
     .toContain("/media/");
   for (const width of [1440, 960, 390, 320]) {
