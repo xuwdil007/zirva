@@ -1,22 +1,30 @@
+import { t } from "../content";
 import { useState } from "react";
 import { ArrowUpRight, Plus, Minus } from "lucide-react";
 import SectionHeading from "./SectionHeading";
-import { services } from "../data/company";
+import { getServices } from "../data/company";
 export default function Expertise() {
+  const services = getServices();
   const [selected, setSelected] = useState(null);
   return (
-    <section className="section expertise" id="expertise">
+    <section
+      className="section expertise"
+      id="expertise"
+    >
       <div className="container">
         <div className="section-row">
-          <SectionHeading number="02" label="НАПРАВЛЕНИЯ">
-            Создаём сегодня.
+          <SectionHeading
+            number="02"
+            label={t("Expertise.1")}
+          >
+            {t("Expertise.2")}
             <br />
-            Для завтрашнего дня.
+            {t("Expertise.3")}
           </SectionHeading>
           <p>
-            Объединяем строительную экспертизу
-            <br className="desktop-break" /> и системный подход к развитию
-            объектов.
+            {t("Expertise.4")}
+            <br className="desktop-break" />
+            {t("Expertise.5")}
           </p>
         </div>
         <div className="service-grid">
@@ -29,16 +37,19 @@ export default function Expertise() {
                 <img
                   src={s.image}
                   alt={
-                    s.title === "Строительство"
-                      ? "Специалист на строительной площадке"
-                      : s.title === "Девелопмент"
-                        ? "Строительная техника за работой"
-                        : "Специалист контролирует ход работ"
+                    s.id === "01"
+                      ? t("Expertise.7")
+                      : s.id === "02"
+                        ? t("Expertise.9")
+                        : t("Expertise.10")
                   }
                   loading="lazy"
                 />
                 <span className="service-number">{s.id} /</span>
-                <ArrowUpRight className="service-arrow" size={27} />
+                <ArrowUpRight
+                  className="service-arrow"
+                  size={27}
+                />
                 <div className="service-caption">
                   <span>{s.category}</span>
                   <h3>{s.title}</h3>
@@ -52,18 +63,25 @@ export default function Expertise() {
                   aria-controls={`service-${s.id}`}
                   onClick={() => setSelected(selected === s.id ? null : s.id)}
                 >
-                  {selected === s.id ? "Свернуть" : "Подробнее о направлении"}
+                  {selected === s.id ? t("Expertise.11") : t("Expertise.12")}
                   {selected === s.id ? <Minus size={19} /> : <Plus size={19} />}
                 </button>
                 {selected === s.id && (
-                  <div id={`service-${s.id}`} className="service-details">
+                  <div
+                    id={`service-${s.id}`}
+                    className="service-details"
+                  >
                     <ul>
                       {s.details.map((d) => (
                         <li key={d}>{d}</li>
                       ))}
                     </ul>
-                    <a href="#contacts" className="text-link">
-                      Обсудить задачу <ArrowUpRight size={17} />
+                    <a
+                      href="#contacts"
+                      className="text-link"
+                    >
+                      {t("Expertise.13")}
+                      <ArrowUpRight size={17} />
                     </a>
                   </div>
                 )}
@@ -72,8 +90,8 @@ export default function Expertise() {
           ))}
         </div>
         <div className="expertise-bottom">
-          <span className="status-dot" /> Единый подход. Разные задачи. Общая
-          ответственность за результат.
+          <span className="status-dot" />
+          {t("Expertise.14")}
         </div>
       </div>
     </section>

@@ -1,0 +1,932 @@
+{
+  "App.1": {
+    "label": "Перейти к содержимому",
+    "value": "Перейти к содержимому",
+    "type": "text",
+    "group": "App"
+  },
+  "About.1": {
+    "label": "О КОМПАНИИ",
+    "value": "О КОМПАНИИ",
+    "type": "text",
+    "group": "About"
+  },
+  "About.2": {
+    "label": "Компания, которой доверяют",
+    "value": "Компания, которой доверяют",
+    "type": "text",
+    "group": "About"
+  },
+  "About.3": {
+    "label": "самые важные проекты.",
+    "value": "самые важные проекты.",
+    "type": "text",
+    "group": "About"
+  },
+  "About.4": {
+    "label": "ZIRVA DEVELOPMENT",
+    "value": "ZIRVA DEVELOPMENT",
+    "type": "text",
+    "group": "About"
+  },
+  "About.5": {
+    "label": "Создавать надёжные объекты и инфраструктуру, обеспечивающие долгосрочное развитие биз",
+    "value": "Создавать надёжные объекты и инфраструктуру, обеспечивающие долгосрочное развитие бизнеса и общества.",
+    "type": "text",
+    "group": "About"
+  },
+  "About.6": {
+    "label": "Важные проекты.",
+    "value": "Важные проекты.",
+    "type": "text",
+    "group": "About"
+  },
+  "About.7": {
+    "label": "Надёжный партнёр.",
+    "value": "Надёжный партнёр.",
+    "type": "text",
+    "group": "About"
+  },
+  "About.8": {
+    "label": "ZIRVA Development — единый центр реализации строительных и инфраструктурных проектов ",
+    "value": "ZIRVA Development — единый центр реализации строительных и инфраструктурных проектов Группы компаний «КОИНОТИ НАВ».",
+    "type": "text",
+    "group": "About"
+  },
+  "About.9": {
+    "label": "Мы управляем строительством от задачи до сдачи. Держим сроки, контролируем качество и",
+    "value": "Мы управляем строительством от задачи до сдачи. Держим сроки, контролируем качество и отвечаем за результат — чтобы каждый объект становился прочной основой для дальнейшего развития.",
+    "type": "text",
+    "group": "About"
+  },
+  "About.10": {
+    "label": "Как мы работаем",
+    "value": "Как мы работаем",
+    "type": "text",
+    "group": "About"
+  },
+  "Approach.1": {
+    "label": "НАШ ПОДХОД",
+    "value": "НАШ ПОДХОД",
+    "type": "text",
+    "group": "Approach"
+  },
+  "Approach.2": {
+    "label": "От первой задачи",
+    "value": "От первой задачи",
+    "type": "text",
+    "group": "Approach"
+  },
+  "Approach.3": {
+    "label": "до готового объекта.",
+    "value": "до готового объекта.",
+    "type": "text",
+    "group": "Approach"
+  },
+  "Approach.4": {
+    "label": "Понятный процесс, в котором",
+    "value": "Понятный процесс, в котором",
+    "type": "text",
+    "group": "Approach"
+  },
+  "Approach.5": {
+    "label": "каждый этап имеет значение.",
+    "value": "каждый этап имеет значение.",
+    "type": "text",
+    "group": "Approach"
+  },
+  "Approach.6": {
+    "label": "НАШЕ ВИДЕНИЕ",
+    "value": "НАШЕ ВИДЕНИЕ",
+    "type": "text",
+    "group": "Approach"
+  },
+  "Approach.7": {
+    "label": "Стать компанией, которую выбирают для объектов, где важны",
+    "value": "Стать компанией, которую выбирают для объектов, где важны",
+    "type": "text",
+    "group": "Approach"
+  },
+  "Approach.8": {
+    "label": "точные сроки, контроль и качество исполнения.",
+    "value": "точные сроки, контроль и качество исполнения.",
+    "type": "text",
+    "group": "Approach"
+  },
+  "BrickTitle.1": {
+    "label": "К НОВЫМ",
+    "value": "К НОВЫМ",
+    "type": "text",
+    "group": "BrickTitle"
+  },
+  "BrickTitle.2": {
+    "label": "ВЕРШИНАМ.",
+    "value": "ВЕРШИНАМ.",
+    "type": "text",
+    "group": "BrickTitle"
+  },
+  "BrickTitle.3": {
+    "label": "К новым вершинам",
+    "value": "К новым вершинам",
+    "type": "text",
+    "group": "BrickTitle"
+  },
+  "Contacts.1": {
+    "label": "КОНТАКТЫ",
+    "value": "КОНТАКТЫ",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.2": {
+    "label": "Новая вершина",
+    "value": "Новая вершина",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.3": {
+    "label": "начинается",
+    "value": "начинается",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.4": {
+    "label": "с разговора.",
+    "value": "с разговора.",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.5": {
+    "label": "Расскажите о вашей задаче.",
+    "value": "Расскажите о вашей задаче.",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.6": {
+    "label": "Обсудим, как воплотить её в жизнь.",
+    "value": "Обсудим, как воплотить её в жизнь.",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.7": {
+    "label": "Давайте обсудим ваш проект",
+    "value": "Давайте обсудим ваш проект",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.8": {
+    "label": "Оставьте несколько слов о себе и вашей задаче.",
+    "value": "Оставьте несколько слов о себе и вашей задаче.",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.9": {
+    "label": "Ваше имя",
+    "value": "Ваше имя",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.10": {
+    "label": "Как к вам обращаться?",
+    "value": "Как к вам обращаться?",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.11": {
+    "label": "Телефон",
+    "value": "Телефон",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.12": {
+    "label": "+992 …",
+    "value": "+992 …",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.13": {
+    "label": "О вашем проекте",
+    "value": "О вашем проекте",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.14": {
+    "label": "Что вы планируете построить?",
+    "value": "Что вы планируете построить?",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.15": {
+    "label": "Отправить заявку",
+    "value": "Отправить заявку",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.16": {
+    "label": "Оставьте номер телефона — мы свяжемся с вами, чтобы обсудить проект.",
+    "value": "Оставьте номер телефона — мы свяжемся с вами, чтобы обсудить проект.",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.17": {
+    "label": "Заявка отправлена. Спасибо! Мы свяжемся с вами.",
+    "value": "Заявка отправлена. Спасибо! Мы свяжемся с вами.",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Expertise.1": {
+    "label": "НАПРАВЛЕНИЯ",
+    "value": "НАПРАВЛЕНИЯ",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Expertise.2": {
+    "label": "Создаём сегодня.",
+    "value": "Создаём сегодня.",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Expertise.3": {
+    "label": "Для завтрашнего дня.",
+    "value": "Для завтрашнего дня.",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Expertise.4": {
+    "label": "Объединяем строительную экспертизу",
+    "value": "Объединяем строительную экспертизу",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Expertise.5": {
+    "label": "и системный подход к развитию объектов.",
+    "value": "и системный подход к развитию объектов.",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Expertise.7": {
+    "label": "Специалист на строительной площадке",
+    "value": "Специалист на строительной площадке",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Expertise.9": {
+    "label": "Строительная техника за работой",
+    "value": "Строительная техника за работой",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Expertise.10": {
+    "label": "Специалист контролирует ход работ",
+    "value": "Специалист контролирует ход работ",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Expertise.11": {
+    "label": "Свернуть",
+    "value": "Свернуть",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Expertise.12": {
+    "label": "Подробнее о направлении",
+    "value": "Подробнее о направлении",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Expertise.13": {
+    "label": "Обсудить задачу",
+    "value": "Обсудить задачу",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Expertise.14": {
+    "label": "Единый подход. Разные задачи. Общая ответственность за результат.",
+    "value": "Единый подход. Разные задачи. Общая ответственность за результат.",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Footer.1": {
+    "label": "На главную",
+    "value": "На главную",
+    "type": "text",
+    "group": "Footer"
+  },
+  "Footer.2": {
+    "label": "ZIRVA Development",
+    "value": "ZIRVA Development",
+    "type": "text",
+    "group": "Footer"
+  },
+  "Footer.3": {
+    "label": "К НОВЫМ",
+    "value": "К НОВЫМ",
+    "type": "text",
+    "group": "Footer"
+  },
+  "Footer.4": {
+    "label": "ВЕРШИНАМ.",
+    "value": "ВЕРШИНАМ.",
+    "type": "text",
+    "group": "Footer"
+  },
+  "Footer.5": {
+    "label": "Строительная и девелоперская платформа",
+    "value": "Строительная и девелоперская платформа",
+    "type": "text",
+    "group": "Footer"
+  },
+  "Footer.6": {
+    "label": "Группы компаний «КОИНОТИ НАВ»",
+    "value": "Группы компаний «КОИНОТИ НАВ»",
+    "type": "text",
+    "group": "Footer"
+  },
+  "Footer.7": {
+    "label": "Навигация в подвале",
+    "value": "Навигация в подвале",
+    "type": "text",
+    "group": "Footer"
+  },
+  "Footer.8": {
+    "label": "Контакты компании",
+    "value": "Контакты компании",
+    "type": "text",
+    "group": "Footer"
+  },
+  "Footer.9": {
+    "label": "ZIRVA Development",
+    "value": "ZIRVA Development",
+    "type": "text",
+    "group": "Footer"
+  },
+  "Footer.10": {
+    "label": "ДУШАНБЕ · ТАДЖИКИСТАН",
+    "value": "ДУШАНБЕ · ТАДЖИКИСТАН",
+    "type": "text",
+    "group": "Footer"
+  },
+  "Footer.11": {
+    "label": "СТРОИМ С ОТВЕТСТВЕННОСТЬЮ",
+    "value": "СТРОИМ С ОТВЕТСТВЕННОСТЬЮ",
+    "type": "text",
+    "group": "Footer"
+  },
+  "Footer.12": {
+    "label": "Вернуться наверх",
+    "value": "Вернуться наверх",
+    "type": "text",
+    "group": "Footer"
+  },
+  "Header.1": {
+    "label": "ZIRVA Development — главная",
+    "value": "ZIRVA Development — главная",
+    "type": "text",
+    "group": "Header"
+  },
+  "Header.2": {
+    "label": "ZIRVA Development",
+    "value": "ZIRVA Development",
+    "type": "text",
+    "group": "Header"
+  },
+  "Header.3": {
+    "label": "Основная навигация",
+    "value": "Основная навигация",
+    "type": "text",
+    "group": "Header"
+  },
+  "Header.4": {
+    "label": "Контакты",
+    "value": "Контакты",
+    "type": "text",
+    "group": "Header"
+  },
+  "Header.5": {
+    "label": "Обсудить проект",
+    "value": "Обсудить проект",
+    "type": "text",
+    "group": "Header"
+  },
+  "Header.6": {
+    "label": "Закрыть меню",
+    "value": "Закрыть меню",
+    "type": "text",
+    "group": "Header"
+  },
+  "Header.7": {
+    "label": "Открыть меню",
+    "value": "Открыть меню",
+    "type": "text",
+    "group": "Header"
+  },
+  "Hero.1": {
+    "label": "СТРОИТЕЛЬСТВО. ДЕВЕЛОПМЕНТ. ИНФРАСТРУКТУРА.",
+    "value": "СТРОИТЕЛЬСТВО. ДЕВЕЛОПМЕНТ. ИНФРАСТРУКТУРА.",
+    "type": "text",
+    "group": "Hero"
+  },
+  "Hero.2": {
+    "label": "Создаём надёжные объекты.",
+    "value": "Создаём надёжные объекты.",
+    "type": "text",
+    "group": "Hero"
+  },
+  "Hero.3": {
+    "label": "Строим основу для будущего.",
+    "value": "Строим основу для будущего.",
+    "type": "text",
+    "group": "Hero"
+  },
+  "Hero.4": {
+    "label": "Наши направления",
+    "value": "Наши направления",
+    "type": "text",
+    "group": "Hero"
+  },
+  "Hero.5": {
+    "label": "ДУШАНБЕ, ТАДЖИКИСТАН",
+    "value": "ДУШАНБЕ, ТАДЖИКИСТАН",
+    "type": "text",
+    "group": "Hero"
+  },
+  "Hero.6": {
+    "label": "38°33′ N 68°46′ E",
+    "value": "38°33′ N 68°46′ E",
+    "type": "text",
+    "group": "Hero"
+  },
+  "Hero.7": {
+    "label": "TOWARD NEW HEIGHTS — ZIRVA DEVELOPMENT",
+    "value": "TOWARD NEW HEIGHTS — ZIRVA DEVELOPMENT",
+    "type": "text",
+    "group": "Hero"
+  },
+  "History.1": {
+    "label": "НАШ ПУТЬ",
+    "value": "НАШ ПУТЬ",
+    "type": "text",
+    "group": "History"
+  },
+  "History.2": {
+    "label": "История ZIRVA",
+    "value": "История ZIRVA",
+    "type": "text",
+    "group": "History"
+  },
+  "History.3": {
+    "label": "Development",
+    "value": "Development",
+    "type": "text",
+    "group": "History"
+  },
+  "History.4": {
+    "label": "От внутренних задач —",
+    "value": "От внутренних задач —",
+    "type": "text",
+    "group": "History"
+  },
+  "History.5": {
+    "label": "к новым масштабам.",
+    "value": "к новым масштабам.",
+    "type": "text",
+    "group": "History"
+  },
+  "History.6": {
+    "label": "Наш путь начался с ремонта и строительства объектов Группы компаний «КОИНОТИ НАВ». Ро",
+    "value": "Наш путь начался с ремонта и строительства объектов Группы компаний «КОИНОТИ НАВ». Рост проектов стал основой для создания самостоятельной платформы ZIRVA Development.",
+    "type": "text",
+    "group": "History"
+  },
+  "History.7": {
+    "label": "ZIRVA Development выросла из внутреннего направления Группы компаний «КОИНОТИ НАВ».",
+    "value": "ZIRVA Development выросла из внутреннего направления Группы компаний «КОИНОТИ НАВ».",
+    "type": "text",
+    "group": "History"
+  },
+  "History.8": {
+    "label": "В 2023 году в составе Административно-Хозяйственного Департамента стартовало направле",
+    "value": "В 2023 году в составе Административно-Хозяйственного Департамента стартовало направление по ремонту и строительству внутренних объектов.",
+    "type": "text",
+    "group": "History"
+  },
+  "History.9": {
+    "label": "Благодаря росту проектов в 2026 году направление стало самостоятельной строительной и",
+    "value": "Благодаря росту проектов в 2026 году направление стало самостоятельной строительной и девелоперской платформой.",
+    "type": "text",
+    "group": "History"
+  },
+  "History.10": {
+    "label": "Сегодня ZIRVA Development — единый центр реализации строительных и инфраструктурных п",
+    "value": "Сегодня ZIRVA Development — единый центр реализации строительных и инфраструктурных проектов Группы компаний «КОИНОТИ НАВ».",
+    "type": "text",
+    "group": "History"
+  },
+  "Mission.1": {
+    "label": "НАША МИССИЯ",
+    "value": "НАША МИССИЯ",
+    "type": "text",
+    "group": "Mission"
+  },
+  "Mission.2": {
+    "label": "Создавать надёжные объекты",
+    "value": "Создавать надёжные объекты",
+    "type": "text",
+    "group": "Mission"
+  },
+  "Mission.3": {
+    "label": "и инфраструктуру для",
+    "value": "и инфраструктуру для",
+    "type": "text",
+    "group": "Mission"
+  },
+  "Mission.4": {
+    "label": "долгосрочного развития.",
+    "value": "долгосрочного развития.",
+    "type": "text",
+    "group": "Mission"
+  },
+  "Mission.5": {
+    "label": "БИЗНЕСА. ОБЩЕСТВА. БУДУЩЕГО.",
+    "value": "БИЗНЕСА. ОБЩЕСТВА. БУДУЩЕГО.",
+    "type": "text",
+    "group": "Mission"
+  },
+  "Mission.6": {
+    "label": "БА ҚУЛЛАҲОИ НАВ",
+    "value": "БА ҚУЛЛАҲОИ НАВ",
+    "type": "text",
+    "group": "Mission"
+  },
+  "Values.1": {
+    "label": "ЦЕННОСТИ",
+    "value": "ЦЕННОСТИ",
+    "type": "text",
+    "group": "Values"
+  },
+  "Values.2": {
+    "label": "Наш фундамент —",
+    "value": "Наш фундамент —",
+    "type": "text",
+    "group": "Values"
+  },
+  "Values.3": {
+    "label": "наши принципы.",
+    "value": "наши принципы.",
+    "type": "text",
+    "group": "Values"
+  },
+  "Values.4": {
+    "label": "То, на что мы опираемся",
+    "value": "То, на что мы опираемся",
+    "type": "text",
+    "group": "Values"
+  },
+  "Values.5": {
+    "label": "в решениях и ежедневной работе.",
+    "value": "в решениях и ежедневной работе.",
+    "type": "text",
+    "group": "Values"
+  },
+  "Company.1": {
+    "label": "+992 98 836 55 04",
+    "value": "+992 98 836 55 04",
+    "type": "text",
+    "group": "Company"
+  },
+  "Company.2": {
+    "label": "info@koinotinav.com",
+    "value": "info@koinotinav.com",
+    "type": "text",
+    "group": "Company"
+  },
+  "Company.3": {
+    "label": "Республика Таджикистан, г. Душанбе, район Сино, улица Шамси, дом 4 «Б»",
+    "value": "Республика Таджикистан, г. Душанбе, район Сино, улица Шамси, дом 4 «Б»",
+    "type": "text",
+    "group": "Company"
+  },
+  "Company.4": {
+    "label": "О компании",
+    "value": "О компании",
+    "type": "text",
+    "group": "Header"
+  },
+  "Company.5": {
+    "label": "Направления",
+    "value": "Направления",
+    "type": "text",
+    "group": "Header"
+  },
+  "Company.6": {
+    "label": "Наш подход",
+    "value": "Наш подход",
+    "type": "text",
+    "group": "Header"
+  },
+  "Company.7": {
+    "label": "Ценности",
+    "value": "Ценности",
+    "type": "text",
+    "group": "Header"
+  },
+  "Company.8": {
+    "label": "Строительство",
+    "value": "Строительство",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Company.9": {
+    "label": "От задачи до сдачи",
+    "value": "От задачи до сдачи",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "images.image-804.jpeg": {
+    "label": "Фотография: Строительство",
+    "value": "assets/image-804.jpeg",
+    "type": "image",
+    "group": "Images"
+  },
+  "Company.10": {
+    "label": "Реализация строительных объектов с вниманием к каждому этапу: срокам, качеству исполн",
+    "value": "Реализация строительных объектов с вниманием к каждому этапу: срокам, качеству исполнения и конечному результату.",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Company.11": {
+    "label": "Организация строительных работ",
+    "value": "Организация строительных работ",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Company.12": {
+    "label": "Контроль качества исполнения",
+    "value": "Контроль качества исполнения",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Company.13": {
+    "label": "Координация этапов и сроков",
+    "value": "Координация этапов и сроков",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Company.14": {
+    "label": "Девелопмент",
+    "value": "Девелопмент",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Company.15": {
+    "label": "Основа для развития",
+    "value": "Основа для развития",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "images.image-819.jpeg": {
+    "label": "Фотография: Девелопмент",
+    "value": "assets/image-819.jpeg",
+    "type": "image",
+    "group": "Images"
+  },
+  "Company.16": {
+    "label": "Развитие объектов Группы компаний «КОИНОТИ НАВ». Соединяем задачи бизнеса и управлени",
+    "value": "Развитие объектов Группы компаний «КОИНОТИ НАВ». Соединяем задачи бизнеса и управление реализацией в едином центре ответственности.",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Company.17": {
+    "label": "Развитие объектов группы",
+    "value": "Развитие объектов группы",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Company.18": {
+    "label": "Управление реализацией",
+    "value": "Управление реализацией",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Company.19": {
+    "label": "Единый центр ответственности",
+    "value": "Единый центр ответственности",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Company.20": {
+    "label": "Инфраструктура",
+    "value": "Инфраструктура",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Company.21": {
+    "label": "Долгосрочная перспектива",
+    "value": "Долгосрочная перспектива",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "images.image-827.jpeg": {
+    "label": "Фотография: Инфраструктура",
+    "value": "assets/image-827.jpeg",
+    "type": "image",
+    "group": "Images"
+  },
+  "Company.22": {
+    "label": "Строительные и инфраструктурные проекты, которые создают надёжную основу для долгосро",
+    "value": "Строительные и инфраструктурные проекты, которые создают надёжную основу для долгосрочного развития бизнеса и общества.",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Company.23": {
+    "label": "Инфраструктурные проекты",
+    "value": "Инфраструктурные проекты",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Company.24": {
+    "label": "Ремонт внутренних объектов",
+    "value": "Ремонт внутренних объектов",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Company.25": {
+    "label": "Создание условий для роста",
+    "value": "Создание условий для роста",
+    "type": "text",
+    "group": "Expertise"
+  },
+  "Company.26": {
+    "label": "Надёжность",
+    "value": "Надёжность",
+    "type": "text",
+    "group": "Values"
+  },
+  "Company.27": {
+    "label": "Держим слово, сроки и результат.",
+    "value": "Держим слово, сроки и результат.",
+    "type": "text",
+    "group": "Values"
+  },
+  "Company.28": {
+    "label": "Качество",
+    "value": "Качество",
+    "type": "text",
+    "group": "Values"
+  },
+  "Company.29": {
+    "label": "Строим объекты, которые служат долго.",
+    "value": "Строим объекты, которые служат долго.",
+    "type": "text",
+    "group": "Values"
+  },
+  "Company.30": {
+    "label": "Дисциплина",
+    "value": "Дисциплина",
+    "type": "text",
+    "group": "Values"
+  },
+  "Company.31": {
+    "label": "Работаем по плану и контролируем каждый этап.",
+    "value": "Работаем по плану и контролируем каждый этап.",
+    "type": "text",
+    "group": "Values"
+  },
+  "Company.32": {
+    "label": "Оперативность",
+    "value": "Оперативность",
+    "type": "text",
+    "group": "Values"
+  },
+  "Company.33": {
+    "label": "Быстро принимаем решения и не затягиваем процесс.",
+    "value": "Быстро принимаем решения и не затягиваем процесс.",
+    "type": "text",
+    "group": "Values"
+  },
+  "Company.34": {
+    "label": "Ответственность",
+    "value": "Ответственность",
+    "type": "text",
+    "group": "Values"
+  },
+  "Company.35": {
+    "label": "Отвечаем за решения и итог.",
+    "value": "Отвечаем за решения и итог.",
+    "type": "text",
+    "group": "Values"
+  },
+  "Company.36": {
+    "label": "Созидание",
+    "value": "Созидание",
+    "type": "text",
+    "group": "Values"
+  },
+  "Company.37": {
+    "label": "Создаём объекты, которые помогают партнёрам расти.",
+    "value": "Создаём объекты, которые помогают партнёрам расти.",
+    "type": "text",
+    "group": "Values"
+  },
+  "Company.38": {
+    "label": "Понимаем задачу",
+    "value": "Понимаем задачу",
+    "type": "text",
+    "group": "Approach"
+  },
+  "Company.39": {
+    "label": "Начинаем с целей проекта и результата, который нужен бизнесу.",
+    "value": "Начинаем с целей проекта и результата, который нужен бизнесу.",
+    "type": "text",
+    "group": "Approach"
+  },
+  "Company.40": {
+    "label": "Планируем работу",
+    "value": "Планируем работу",
+    "type": "text",
+    "group": "Approach"
+  },
+  "Company.41": {
+    "label": "Выстраиваем последовательность этапов и ориентиры по срокам.",
+    "value": "Выстраиваем последовательность этапов и ориентиры по срокам.",
+    "type": "text",
+    "group": "Approach"
+  },
+  "Company.42": {
+    "label": "Управляем реализацией",
+    "value": "Управляем реализацией",
+    "type": "text",
+    "group": "Approach"
+  },
+  "Company.43": {
+    "label": "Координируем работы и контролируем качество на каждом этапе.",
+    "value": "Координируем работы и контролируем качество на каждом этапе.",
+    "type": "text",
+    "group": "Approach"
+  },
+  "Company.44": {
+    "label": "Отвечаем за результат",
+    "value": "Отвечаем за результат",
+    "type": "text",
+    "group": "Approach"
+  },
+  "Company.45": {
+    "label": "Доводим проект до сдачи, сохраняя внимание к деталям.",
+    "value": "Доводим проект до сдачи, сохраняя внимание к деталям.",
+    "type": "text",
+    "group": "Approach"
+  },
+  "images.logo": {
+    "label": "Логотип в шапке и подвале",
+    "value": "assets/logo-footer.svg",
+    "type": "image",
+    "group": "Images"
+  },
+  "images.hero": {
+    "label": "Фоновая фотография главного экрана",
+    "value": "assets/cranes.jpg",
+    "type": "image",
+    "group": "Images"
+  },
+  "seo.title": {
+    "label": "Название вкладки браузера",
+    "value": "Zirva",
+    "type": "text",
+    "group": "SEO"
+  },
+  "Contacts.pending": {
+    "label": "Отправляем…",
+    "value": "Отправляем…",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.error": {
+    "label": "Не удалось отправить заявку. Повторите попытку или свяжитесь с нами по телефону.",
+    "value": "Не удалось отправить заявку. Повторите попытку или свяжитесь с нами по телефону.",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "Contacts.invalid": {
+    "label": "Укажите номер телефона: от 7 до 15 цифр.",
+    "value": "Укажите номер телефона: от 7 до 15 цифр.",
+    "type": "text",
+    "group": "Contacts"
+  },
+  "History.year1": {
+    "value": "2023",
+    "label": "Первый год истории",
+    "type": "text",
+    "group": "History"
+  },
+  "History.year2": {
+    "value": "2026",
+    "label": "Второй год истории",
+    "type": "text",
+    "group": "History"
+  },
+  "seo.description": {
+    "value": "ZIRVA Development — строительная и девелоперская платформа Группы компаний «КОИНОТИ НАВ». Управляем строительством от задачи до сдачи. Душанбе, Таджикистан.",
+    "label": "Описание сайта",
+    "type": "text",
+    "group": "SEO"
+  }
+}

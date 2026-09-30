@@ -33,6 +33,7 @@ jobs:
       - name: Build website
         run: npm run build
         env:
+          VITE_API_URL: ${{ vars.VITE_API_URL }}
           VITE_BASE_PATH: ${{ steps.pages.outputs.base_path }}/
       - name: Upload website
         uses: actions/upload-pages-artifact@v3

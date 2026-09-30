@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <title>Zirva — управление сайтом</title>
+    <link
+      rel="stylesheet"
+      href="style.css"
+    />
+    <script
+      defer
+      src="app.js"
+    ></script>
+  </head>
+  <body>
+    <header>
+      <a
+        class="brand"
+        href="/admin/"
+        >ZIRVA <span>Управление сайтом</span></a
+      ><button
+        id="logout"
+        hidden
+      >
+        Выйти
+      </button>
+    </header>
+    <main>
+      <p
+        id="notice"
+        role="status"
+        aria-live="polite"
+      ></p>
+      <form
+        id="login"
+        class="login panel"
+        hidden
+      >
+        <span class="eyebrow">АДМИНИСТРАТОР</span>
+        <h1>Вход в админку</h1>
+        <label
+          >Логин<input
+            name="username"
+            autocomplete="username"
+            required
+            value="admin"
+        /></label>
+        <label
+          >Пароль<input
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+        /></label>
+        <button class="primary">Войти</button>
+      </form>
+      <div
+        id="workspace"
+        hidden
+      >
+        <nav
+          class="tabs"
+          aria-label="Разделы управления"
+        >
+          <button
+            id="content-tab"
+            class="active"
+          >
+            Тексты и фотографии
+          </button>
+          <button id="leads-tab">Заявки <span id="count"></span></button>
+        </nav>
+        <section id="content-panel">
+          <div class="toolbar">
+            <div>
+              <h1>Содержание сайта</h1>
+              <p>
+                Правки появятся на сайте после сохранения и обновления страницы.
+              </p>
+            </div>
+            <button
+              id="save"
+              class="primary"
+              disabled
+            >
+              Сохранить изменения
+            </button>
+          </div>
+          <div class="editor">
+            <aside
+              id="groups"
+              aria-label="Разделы сайта"
+            ></aside>
+            <div
+              class="panel"
+              id="fields"
+            ></div>
+          </div>
+        </section>
+        <section
+          id="leads-panel"
+          hidden
+        >
+          <div class="toolbar">
+            <div>
+              <h1>Заявки на обсуждение проекта</h1>
+              <p>Новые обращения с формы сайта.</p>
+            </div>
+            <button id="refresh">Обновить</button>
+          </div>
+          <div class="filters">
+            <input
+              id="search"
+              aria-label="Поиск заявок"
+              placeholder="Имя, телефон или текст заявки"
+            /><select
+              id="status-filter"
+              aria-label="Фильтр статуса"
+            >
+              <option value="">Все статусы</option>
+              <option value="new">Новые</option>
+              <option value="progress">В работе</option>
+              <option value="done">Завершены</option>
+            </select>
+          </div>
+          <div id="leads"></div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

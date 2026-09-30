@@ -53,17 +53,16 @@ export default function useScrollReveal(rootRef) {
         if (element.matches(".service-card, .step, .value")) {
           const siblings = [...element.parentElement.children];
           const index = siblings.indexOf(element);
-          // Небольшая очередность внутри ряда, без длинного ожидания на мобильном.
+
           element.style.setProperty("--reveal-delay", `${(index % 3) * 65}ms`);
         }
         observer.observe(element);
       });
     }
 
-    // Навигация клавиатурой не должна приводить к фокусу на невидимой кнопке.
     function onFocus(event) {
       const element = event.target.closest(".scroll-reveal-pending");
-      if (element) {
+      if (element && event.target.matches(":focus-visible")) {
         element.classList.remove("scroll-reveal");
         reveal(element);
       }

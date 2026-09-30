@@ -1109,7 +1109,7 @@ p {
     gap: 12px;
   }
   .hero {
-    min-height: 695px;
+    min-height: 620px;
   }
   .hero-photo {
     background-position: 62% bottom;
@@ -1119,7 +1119,8 @@ p {
       url("/assets/cranes.jpg");
   }
   .hero-content {
-    padding-top: 45px;
+    padding-top: 100px;
+    padding-bottom: 48px;
   }
   .hero-topline {
     font-size: 7px;
@@ -1633,4 +1634,18 @@ p {
   .footer-main {
     row-gap: 16px;
   }
+}
+
+.form-trap {
+  position: absolute !important;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+}
+.form-error {
+  color: #b32424 !important;
+}
+.contact-form button:disabled {
+  opacity: 0.65;
+  cursor: wait;
 }

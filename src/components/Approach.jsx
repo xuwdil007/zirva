@@ -1,25 +1,36 @@
+import { t } from "../content";
 import SectionHeading from "./SectionHeading";
-import { steps } from "../data/company";
+import { getSteps } from "../data/company";
 
 export default function Approach() {
+  const steps = getSteps();
   return (
-    <section className="section approach" id="approach">
+    <section
+      className="section approach"
+      id="approach"
+    >
       <div className="container">
         <div className="section-row">
-          <SectionHeading number="03" label="НАШ ПОДХОД">
-            От первой задачи
+          <SectionHeading
+            number="03"
+            label={t("Approach.1")}
+          >
+            {t("Approach.2")}
             <br />
-            до готового объекта.
+            {t("Approach.3")}
           </SectionHeading>
           <p>
-            Понятный процесс, в котором
+            {t("Approach.4")}
             <br />
-            каждый этап имеет значение.
+            {t("Approach.5")}
           </p>
         </div>
         <div className="steps">
           {steps.map((step, index) => (
-            <article className="step" key={step.title}>
+            <article
+              className="step"
+              key={step.title}
+            >
               <div className="step-top">
                 <span>0{index + 1}</span>
                 <span className="step-dot" />
@@ -30,10 +41,9 @@ export default function Approach() {
           ))}
         </div>
         <div className="vision">
-          <span className="eyebrow">НАШЕ ВИДЕНИЕ</span>
+          <span className="eyebrow">{t("Approach.6")}</span>
           <p>
-            Стать компанией, которую выбирают для объектов, где важны{" "}
-            <strong>точные сроки, контроль и качество исполнения.</strong>
+            {t("Approach.7")} <strong>{t("Approach.8")}</strong>
           </p>
         </div>
       </div>

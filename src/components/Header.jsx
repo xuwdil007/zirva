@@ -1,7 +1,9 @@
+import { t, asset } from "../content";
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
-import { navigation } from "../data/company";
+import { getNavigation } from "../data/company";
 export default function Header() {
+  const navigation = getNavigation();
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const close = (e) => {
@@ -16,18 +18,18 @@ export default function Header() {
         <a
           className="brand"
           href="#home"
-          aria-label="ZIRVA Development — главная"
+          aria-label={t("Header.1")}
           onClick={() => setOpen(false)}
         >
           <img
-            src={`${import.meta.env.BASE_URL}assets/logo-footer.svg`}
-            alt="ZIRVA Development"
+            src={asset("images.logo")}
+            alt={t("Header.2")}
             width="84"
             height="73"
           />
         </a>
         <nav
-          aria-label="Основная навигация"
+          aria-label={t("Header.3")}
           className={open ? "nav open" : "nav"}
           id="main-nav"
         >
@@ -40,16 +42,23 @@ export default function Header() {
               {item.label}
             </a>
           ))}
-          <a href="#contacts" onClick={() => setOpen(false)}>
-            Контакты
+          <a
+            href="#contacts"
+            onClick={() => setOpen(false)}
+          >
+            {t("Header.4")}
           </a>
         </nav>
-        <a href="#contacts" className="header-cta">
-          Обсудить проект <ArrowUpRight size={17} />
+        <a
+          href="#contacts"
+          className="header-cta"
+        >
+          {t("Header.5")}
+          <ArrowUpRight size={17} />
         </a>
         <button
           className="menu-toggle"
-          aria-label={open ? "Закрыть меню" : "Открыть меню"}
+          aria-label={open ? t("Header.6") : t("Header.7")}
           aria-expanded={open}
           aria-controls="main-nav"
           onClick={() => setOpen(!open)}

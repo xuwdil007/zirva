@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "preview": "vite preview --host 0.0.0.0"
+    "preview": "vite preview --host 0.0.0.0",
+    "dev:backend": "node scripts/start-backend.mjs",
+    "test:backend": "cd backend && go test ./...",
+    "test:admin": "node scripts/check-admin.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",

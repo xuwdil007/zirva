@@ -1,11 +1,12 @@
+import { t } from "../content";
 import { useEffect, useState } from "react";
 import "./brick-title.css";
 
-const lines = ["К НОВЫМ", "ВЕРШИНАМ."];
 const rows = 3;
 const columns = 9;
 
 export default function BrickTitle() {
+  const lines = [t("BrickTitle.1"), t("BrickTitle.2")];
   const [building, setBuilding] = useState(true);
   const [ready, setReady] = useState(false);
 
@@ -38,7 +39,7 @@ export default function BrickTitle() {
     <h1
       id="hero-title"
       className={`brick-title${building ? " is-building" : ""}${ready ? " is-ready" : ""}`}
-      aria-label="К новым вершинам"
+      aria-label={t("BrickTitle.3")}
     >
       {lines.map((text, line) => (
         <div
@@ -47,7 +48,10 @@ export default function BrickTitle() {
         >
           <span className="brick-title-source">{text}</span>
           {building && (
-            <div className="brick-title-pieces" aria-hidden="true">
+            <div
+              className="brick-title-pieces"
+              aria-hidden="true"
+            >
               {Array.from({ length: rows * columns }, (_, index) => {
                 const row = Math.floor(index / columns);
                 const column = index % columns;

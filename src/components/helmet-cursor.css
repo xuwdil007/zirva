@@ -1,4 +1,3 @@
-/* Каска заменяет курсор только над ссылками и кнопками. */
 @media (hover: hover) and (pointer: fine) {
   html.helmet-cursor-active,
   html.helmet-cursor-active * {
@@ -44,10 +43,11 @@
   animation: helmet-cursor-nod 420ms ease-in-out;
 }
 .helmet-cursor.is-pressed .helmet-cursor-offset {
-  scale: .88;
+  scale: 0.88;
 }
 @keyframes helmet-cursor-nod {
-  0%, 100% {
+  0%,
+  100% {
     transform: rotate(0deg);
   }
   35% {

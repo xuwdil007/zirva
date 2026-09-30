@@ -1,20 +1,22 @@
+import { t } from "../content";
 import { ArrowUpRight } from "lucide-react";
 export default function Mission() {
   return (
     <section className="mission">
       <div className="container mission-inner">
         <div className="eyebrow">
-          <span>НАША МИССИЯ</span>
+          <span>{t("Mission.1")}</span>
           <ArrowUpRight size={30} />
         </div>
         <h2>
-          Создавать надёжные объекты
-          <br className="desktop-break" /> и инфраструктуру для
-          <br className="desktop-break" /> <span>долгосрочного развития.</span>
+          {t("Mission.2")}
+          <br className="desktop-break" />
+          {t("Mission.3")}
+          <br className="desktop-break" /> <span>{t("Mission.4")}</span>
         </h2>
         <div className="mission-bottom">
-          <span>БИЗНЕСА. ОБЩЕСТВА. БУДУЩЕГО.</span>
-          <span>БА ҚУЛЛАҲОИ НАВ</span>
+          <span>{t("Mission.5")}</span>
+          <span>{t("Mission.6")}</span>
         </div>
       </div>
     </section>

@@ -1,48 +1,39 @@
+import { t } from "../content";
 export default function History() {
   return (
-    <section className="company-history" aria-labelledby="history-title">
+    <section
+      className="company-history"
+      aria-labelledby="history-title"
+    >
       <div>
-        <span className="eyebrow">НАШ ПУТЬ</span>
+        <span className="eyebrow">{t("History.1")}</span>
         <h3 id="history-title">
-          История ZIRVA
+          {t("History.2")}
           <br />
-          Development
+          {t("History.3")}
         </h3>
         <div className="company-history-intro">
           <p className="company-history-motto">
-            От внутренних задач —<br />к новым масштабам.
+            {t("History.4")}
+            <br />
+            {t("History.5")}
           </p>
-          <p>
-            Наш путь начался с ремонта и строительства объектов Группы компаний
-            «КОИНОТИ НАВ». Рост проектов стал основой для создания
-            самостоятельной платформы ZIRVA Development.
-          </p>
+          <p>{t("History.6")}</p>
         </div>
       </div>
       <div className="company-history-content">
-        <p className="lead">
-          ZIRVA Development выросла из внутреннего направления Группы компаний
-          «КОИНОТИ НАВ».
-        </p>
+        <p className="lead">{t("History.7")}</p>
         <div className="company-history-event">
-          <span className="company-history-date">2023</span>
-          <p>
-            В 2023 году в составе Административно-Хозяйственного Департамента
-            стартовало направление по ремонту и строительству внутренних
-            объектов.
-          </p>
+          <span className="company-history-date">{t("History.year1")}</span>
+          <p>{t("History.8")}</p>
         </div>
         <div className="company-history-event">
-          <span className="company-history-date orange">2026</span>
-          <p>
-            Благодаря росту проектов в 2026 году направление стало
-            самостоятельной строительной и девелоперской платформой.
-          </p>
+          <span className="company-history-date orange">
+            {t("History.year2")}
+          </span>
+          <p>{t("History.9")}</p>
         </div>
-        <p className="company-history-today">
-          Сегодня ZIRVA Development — единый центр реализации строительных и
-          инфраструктурных проектов Группы компаний «КОИНОТИ НАВ».
-        </p>
+        <p className="company-history-today">{t("History.10")}</p>
       </div>
     </section>
   );

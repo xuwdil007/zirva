@@ -1,7 +1,6 @@
 import { chromium } from '@playwright/test';
 import assert from 'node:assert/strict';
 
-// Проверяем именно production-сборку, опубликованную внутри /zirva/.
 const browser = await chromium.launch();
 try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
@@ -9,9 +8,9 @@ try {
   const failedRequests = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('response', response => {
-    if (response.status() >= 400) failedRequests.push(`${response.status()} ${response.url()}`);
+    if (response.status() >= 400 && new URL(response.url()).pathname !== '/api/content') failedRequests.push(`${response.status()} ${response.url()}`);
   });
-  await page.goto('http://localhost:4173/zirva/', { waitUntil: 'networkidle' });
+  await page.goto(process.env.PAGES_TEST_URL || 'http://localhost:4173/zirva/', { waitUntil: 'networkidle' });
   assert.equal(await page.title(), 'Zirva');
   await page.evaluate(() => document.fonts.ready);
   await page.getByRole('navigation', { name: 'Основная навигация' }).getByRole('link', { name: 'Направления' }).click();
@@ -24,7 +23,7 @@ try {
   const background = await page.locator('.hero-photo').evaluate(e => getComputedStyle(e).backgroundImage);
   assert.ok(background.includes('/zirva/assets/'), background);
   const icon = await page.locator('link[rel="icon"]').getAttribute('href');
-  assert.ok(icon.startsWith('/zirva/'));
+  assert.ok(new URL(icon, page.url()).pathname.startsWith('/zirva/'));
   await page.getByRole('link', { name: 'Вернуться наверх' }).click();
   await page.waitForURL('**/zirva/#home');
   await page.setViewportSize({ width: 390, height: 844 });

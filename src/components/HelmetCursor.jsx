@@ -197,7 +197,11 @@ export default function HelmetCursor() {
 
   if (!host) return null;
   return createPortal(
-    <div ref={cursorRef} className="helmet-cursor" aria-hidden="true">
+    <div
+      ref={cursorRef}
+      className="helmet-cursor"
+      aria-hidden="true"
+    >
       <div className="helmet-cursor-offset">
         <svg
           className="helmet-cursor-icon"

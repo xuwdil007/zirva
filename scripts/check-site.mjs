@@ -1,35 +1,92 @@
-import { chromium } from '@playwright/test';
-import assert from 'node:assert/strict';
-const browser=await chromium.launch({headless:true, ...(process.env.BROWSER_CHANNEL ? {channel:process.env.BROWSER_CHANNEL} : {})});
-const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});
-const errors=[];page.on('pageerror',e=>errors.push(e.message));
-await page.goto('http://localhost:5173',{waitUntil:'networkidle'});
-await page.evaluate(()=>document.fonts.ready);
-await page.screenshot({path:'artifacts/desktop.png',fullPage:true});
-assert.equal(await page.locator('h1').count(),1);
-assert.ok(await page.evaluate(()=>{const c=document.createElement('canvas').getContext('2d');c.font='40px Inter';return c.measureText('К НОВЫМ ВЕРШИНАМ').width>300}), 'Font advances must remain readable');
-assert.ok(await page.evaluate(()=>document.fonts.check('400 16px Inter')&&document.fonts.check('500 16px Inter')));
-assert.equal(await page.locator('img').evaluateAll(images=>images.filter(i=>!i.complete||!i.naturalWidth).length),0);
-await page.getByRole('button',{name:'Подробнее о направлении'}).first().click();
-assert.equal(await page.locator('#service-01').isVisible(),true);
-await page.getByRole('button',{name:'Свернуть'}).click();
-assert.equal(await page.locator('#service-01').count(),0);
-await page.getByLabel('Ваше имя').fill('Тест');
-await page.getByLabel('Телефон или email').fill('test@example.com');
-await page.getByLabel('О вашем проекте').fill('Строительный проект');
-await page.getByRole('button',{name:'Подготовить письмо'}).click();
-await page.getByRole('status').waitFor();
-for(const width of [1440,1024,768,390,320]){
- await page.setViewportSize({width,height:844});
- assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`overflow at ${width}`);
+import { chromium, expect } from "@playwright/test";
+import assert from "node:assert/strict";
+const browser = await chromium.launch({
+  headless: true,
+  ...(process.env.BROWSER_CHANNEL
+    ? { channel: process.env.BROWSER_CHANNEL }
+    : {}),
+});
+const page = await browser.newPage({
+  viewport: { width: 1440, height: 1000 },
+  deviceScaleFactor: 1,
+});
+const errors = [];
+page.on("pageerror", (e) => errors.push(e.message));
+await page.goto("http://localhost:5173", { waitUntil: "networkidle" });
+await page.evaluate(() => document.fonts.ready);
+await page.screenshot({ path: "artifacts/desktop.png", fullPage: true });
+assert.equal(await page.locator("h1").count(), 1);
+assert.ok(
+  await page.evaluate(() => {
+    const c = document.createElement("canvas").getContext("2d");
+    c.font = "40px Inter";
+    return c.measureText("К НОВЫМ ВЕРШИНАМ").width > 300;
+  }),
+  "Font advances must remain readable",
+);
+assert.ok(
+  await page.evaluate(
+    () =>
+      document.fonts.check("400 16px Inter") &&
+      document.fonts.check("500 16px Inter"),
+  ),
+);
+assert.equal(
+  await page
+    .locator("img")
+    .evaluateAll(
+      (images) => images.filter((i) => !i.complete || !i.naturalWidth).length,
+    ),
+  0,
+);
+await page
+  .getByRole("button", { name: "Подробнее о направлении" })
+  .first()
+  .click();
+await expect(page.locator("#service-01")).toBeVisible();
+await page.getByRole("button", { name: "Свернуть" }).click();
+await expect(page.locator("#service-01")).toHaveCount(0);
+await page.getByLabel("Ваше имя").fill("Тест");
+await page.getByLabel("Телефон").fill("+992 900 00 00 00");
+await page.route("**/api/leads", (route) =>
+  route.fulfill({
+    status: 201,
+    contentType: "application/json",
+    body: JSON.stringify({ id: "ui-test" }),
+  }),
+);
+await page.getByLabel("О вашем проекте").fill("Строительный проект");
+await page.getByRole("button", { name: "Отправить заявку" }).click();
+await page.getByRole("status").waitFor();
+for (const width of [1440, 1024, 768, 390, 320]) {
+  await page.setViewportSize({ width, height: 844 });
+  assert.ok(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+    `overflow at ${width}`,
+  );
 }
-await page.setViewportSize({width:390,height:844});
-await page.goto('http://localhost:5173',{waitUntil:'networkidle'});
-await page.getByRole('button',{name:'Открыть меню'}).click();
-await page.getByRole('navigation',{name:'Основная навигация'}).getByRole('link',{name:'О компании'}).click();
-assert.equal(await page.getByRole('button',{name:'Открыть меню'}).getAttribute('aria-expanded'),'false');
-await page.evaluate(()=>{document.documentElement.style.scrollBehavior='auto';window.scrollTo(0,0)});
-await page.screenshot({path:'artifacts/mobile.png',fullPage:true});
-assert.deepEqual(errors,[]);
-console.log('PASS: desktop/mobile rendering, fonts, images, navigation, accordion, contact form, no overflow (320–1440px), no React errors.');
+await page.setViewportSize({ width: 390, height: 844 });
+await page.goto("http://localhost:5173", { waitUntil: "networkidle" });
+await page.getByRole("button", { name: "Открыть меню" }).click();
+await page
+  .getByRole("navigation", { name: "Основная навигация" })
+  .getByRole("link", { name: "О компании" })
+  .click();
+assert.equal(
+  await page
+    .getByRole("button", { name: "Открыть меню" })
+    .getAttribute("aria-expanded"),
+  "false",
+);
+await page.evaluate(() => {
+  document.documentElement.style.scrollBehavior = "auto";
+  window.scrollTo(0, 0);
+});
+await page.screenshot({ path: "artifacts/mobile.png", fullPage: true });
+assert.deepEqual(errors, []);
+console.log(
+  "PASS: desktop/mobile rendering, fonts, images, navigation, accordion, contact form, no overflow (320–1440px), no React errors.",
+);
 await browser.close();

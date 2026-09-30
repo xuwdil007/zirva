@@ -1,41 +1,42 @@
+import { t } from "../content";
 import { ArrowUpRight } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import History from "./History";
 export default function About() {
   return (
-    <section className="section about" id="about">
+    <section
+      className="section about"
+      id="about"
+    >
       <div className="container">
         <div className="about-top">
           <div className="about-aside">
-            <SectionHeading number="01" label="О КОМПАНИИ" />
+            <SectionHeading
+              number="01"
+              label={t("About.1")}
+            />
             <div className="about-positioning">
               <p className="about-positioning-title">
-                Компания, которой доверяют <span>самые важные проекты.</span>
+                {t("About.2")} <span>{t("About.3")}</span>
               </p>
-              <p className="about-positioning-name">ZIRVA DEVELOPMENT</p>
+              <p className="about-positioning-name">{t("About.4")}</p>
             </div>
-            <p className="about-purpose">
-              Создавать надёжные объекты и инфраструктуру, обеспечивающие
-              долгосрочное развитие бизнеса и общества.
-            </p>
+            <p className="about-purpose">{t("About.5")}</p>
           </div>
           <div className="about-main">
             <h2>
-              Важные проекты.
+              {t("About.6")}
               <br />
-              <span className="muted">Надёжный партнёр.</span>
+              <span className="muted">{t("About.7")}</span>
             </h2>
-            <p className="lead">
-              ZIRVA Development — единый центр реализации строительных и
-              инфраструктурных проектов Группы компаний «КОИНОТИ НАВ».
-            </p>
-            <p className="body-copy">
-              Мы управляем строительством от задачи до сдачи. Держим сроки,
-              контролируем качество и отвечаем за результат — чтобы каждый
-              объект становился прочной основой для дальнейшего развития.
-            </p>
-            <a className="text-link" href="#approach">
-              Как мы работаем <ArrowUpRight size={18} />
+            <p className="lead">{t("About.8")}</p>
+            <p className="body-copy">{t("About.9")}</p>
+            <a
+              className="text-link"
+              href="#approach"
+            >
+              {t("About.10")}
+              <ArrowUpRight size={18} />
             </a>
           </div>
         </div>

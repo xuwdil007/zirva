@@ -11,3 +11,6 @@ artifacts/
 *.log
 *.zip
 .DS_Store
+
+backend/data/
+backend/*.exe

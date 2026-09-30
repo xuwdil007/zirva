@@ -1,38 +1,47 @@
+import { t, asset } from "../content";
 import BrickTitle from "./BrickTitle";
 import { ArrowUpRight } from "lucide-react";
 export default function Hero() {
   return (
-    <section className="hero" id="home" aria-labelledby="hero-title">
-      <div className="hero-photo" />
+    <section
+      className="hero"
+      id="home"
+      aria-labelledby="hero-title"
+    >
+      <div
+        className="hero-photo"
+        style={{ backgroundImage: `url("${asset("images.hero")}")` }}
+      />
       <div className="hero-grid" />
       <div className="container hero-content">
         <div className="hero-topline">
-          <span className="status-dot" /> СТРОИТЕЛЬСТВО. ДЕВЕЛОПМЕНТ.
-          ИНФРАСТРУКТУРА.
+          <span className="status-dot" />
+          {t("Hero.1")}
         </div>
         <BrickTitle />
         <div className="hero-bottom">
           <div>
             <p>
-              Создаём надёжные объекты.
+              {t("Hero.2")}
               <br />
-              Строим основу для будущего.
+              {t("Hero.3")}
             </p>
-            <a className="button button-orange" href="#expertise">
-              Наши направления <ArrowUpRight size={20} />
+            <a
+              className="button button-orange"
+              href="#expertise"
+            >
+              {t("Hero.4")}
+              <ArrowUpRight size={20} />
             </a>
           </div>
         </div>
         <div className="hero-baseline">
           <span className="hero-location">
-            ДУШАНБЕ, ТАДЖИКИСТАН{" "}
-            <span className="coordinates">38°33′ N 68°46′ E</span>
+            {t("Hero.5")} <span className="coordinates">{t("Hero.6")}</span>
           </span>
         </div>
       </div>
-      <div className="hero-side-label">
-        TOWARD NEW HEIGHTS — ZIRVA DEVELOPMENT
-      </div>
+      <div className="hero-side-label">{t("Hero.7")}</div>
     </section>
   );
 }
