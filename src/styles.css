@@ -1638,9 +1638,14 @@ p {
 
 .form-trap {
   position: absolute !important;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
+  left: 0;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 .form-error {
   color: #b32424 !important;
@@ -1648,4 +1653,14 @@ p {
 .contact-form button:disabled {
   opacity: 0.65;
   cursor: wait;
+}
+
+/* Не допускаем бокового смещения страницы при жестах на мобильных. */
+@media (max-width: 800px) {
+  html,
+  body {
+    overflow-x: hidden;
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+  }
 }
