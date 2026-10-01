@@ -30,6 +30,7 @@ async function start() {
       ADMIN_USERNAME: "admin",
       DATA_DIR: path.join(temporary, "data"),
       SITE_DIR: path.join(root, "dist"),
+      ASSETS_DIR: path.join(root, "public", "assets"),
       COOKIE_SECURE: "false",
     },
     stdio: "ignore",
@@ -67,7 +68,7 @@ try {
   await site.getByRole("button", { name: "Отправить заявку" }).click();
   await expect(site.getByRole("status")).toContainText("Заявка отправлена");
 
-  const admin = await browser.newPage();
+  const admin = await browser.newPage({ reducedMotion: "reduce" });
   admin.on("pageerror", (error) => errors.push(error.message));
   await admin.goto(`${base}/admin/`);
   await admin.getByLabel("Пароль").fill(password);
@@ -80,7 +81,20 @@ try {
   await expect(admin.locator(".lead")).toContainText("Клиент проверки");
   await admin.locator(".lead select").selectOption("progress");
   await expect(admin.locator("#notice")).toHaveText("Статус сохранён");
-  await admin.getByRole("button", { name: "Тексты и фотографии" }).click();
+  await expect(admin.locator(".stat-total strong")).toHaveText("1");
+  await expect(admin.locator(".stat-progress strong")).toHaveText("1");
+  await admin.locator("#status-filter").selectOption("new");
+  await expect(admin.locator(".lead")).toHaveCount(0);
+  await expect(admin.locator("#results-count")).toHaveText("Показано 0 из 1");
+  await admin.locator("#status-filter").selectOption("");
+  await admin.locator("#search").fill("Клиент проверки");
+  await expect(admin.locator(".lead")).toHaveCount(1);
+  await admin.locator("#search").fill("несуществующий клиент");
+  await expect(admin.locator(".lead")).toHaveCount(0);
+  await admin.locator("#search").fill("");
+  await admin
+    .getByRole("button", { name: "Главный экран", exact: true })
+    .click();
   await admin.getByRole("button", { name: "О компании", exact: true }).click();
   const field = admin.getByLabel("Важные проекты.", { exact: true });
   await field.fill("Строим будущее вместе.");
@@ -128,7 +142,9 @@ try {
   await site.reload();
   await expect
     .poll(() =>
-      site.locator(".hero-photo").evaluate((el) => getComputedStyle(el).backgroundImage),
+      site
+        .locator(".hero-photo")
+        .evaluate((el) => getComputedStyle(el).backgroundImage),
     )
     .toContain("/media/");
   for (const width of [1440, 960, 390, 320]) {
@@ -154,7 +170,14 @@ try {
   });
   await admin.setViewportSize({ width: 1440, height: 1000 });
   await admin.getByRole("button", { name: /Заявки/ }).click();
+  await expect(admin.locator("#leads-tab")).toHaveCSS("background-color", "rgb(40, 100, 237)");
+  await expect(admin.locator("#groups .active")).toHaveCount(0);
   await admin.screenshot({ path: "artifacts/admin-leads.png", fullPage: true });
+  for (const width of [960, 390, 320]) {
+    await admin.setViewportSize({ width, height: 844 });
+    assert.ok(await admin.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Leads overflow ${width}`);
+  }
+  await admin.screenshot({ path: "artifacts/admin-leads-mobile.png", fullPage: true });
 
   // Недоступный API не должен показывать ложное сообщение об успешной отправке.
   await site.route("**/api/leads", (route) => route.abort());

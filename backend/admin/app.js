@@ -2,7 +2,7 @@
 
 const $ = (id) => document.getElementById(id);
 const groups = {
-  Images: "Фотографии и логотип",
+  Header: "Шапка сайта",
   Hero: "Главный экран",
   BrickTitle: "Главный заголовок",
   About: "О компании",
@@ -13,10 +13,10 @@ const groups = {
   Values: "Ценности",
   Contacts: "Форма связи",
   Company: "Реквизиты и карточки",
-  Header: "Шапка сайта",
   Footer: "Подвал",
   App: "Навигация",
   SEO: "Название сайта",
+  Images: "Фотографии и логотип",
 };
 const statuses = { new: "Новая", progress: "В работе", done: "Завершена" };
 let csrf = "";
@@ -27,7 +27,7 @@ let defaultTexts = {};
 let version = 0;
 let leads = [];
 let dirty = false;
-let group = "Images";
+let group = "Hero";
 let saving = false;
 let pendingUploads = 0;
 let leadsRequest = 0;
@@ -38,6 +38,10 @@ function notice(message, error = false) {
 }
 function setDirty(value) {
   dirty = value;
+  $("save-state").textContent = value
+    ? "Есть несохранённые изменения"
+    : "Все изменения сохранены";
+  $("save-state").classList.toggle("unsaved", value);
   $("save").disabled = !value || saving || pendingUploads > 0;
 }
 async function api(path, options = {}) {
@@ -123,14 +127,40 @@ function historyControls(key, input) {
   return wrapper;
 }
 
+const fieldNames = {
+  "Hero.1": "Надзаголовок · направления компании",
+  "Hero.2": "Описание · первая строка",
+  "Hero.3": "Описание · вторая строка",
+  "Hero.4": "Текст кнопки",
+  "Hero.5": "Город и страна",
+  "Hero.6": "Координаты",
+  "Hero.7": "Боковая подпись",
+  "BrickTitle.1": "Заголовок · первая строка",
+  "BrickTitle.2": "Заголовок · вторая строка",
+  "BrickTitle.3": "Заголовок для экранного диктора",
+};
+
 function renderFields() {
-  $("fields").replaceChildren(element("h2", groups[group] || group));
+  const sectionHeader = element("div", undefined, "fields-heading");
+  sectionHeader.append(
+    element("span", "РЕДАКТОР РАЗДЕЛА", "eyebrow"),
+    element("h2", groups[group] || group),
+  );
+  sectionHeader.append(
+    element(
+      "p",
+      "Измените нужное поле. Прежний вариант всегда можно вернуть из истории.",
+    ),
+  );
+  $("fields").replaceChildren(sectionHeader);
+  let fieldIndex = 0;
   $("groups").replaceChildren();
   for (const [key, title] of Object.entries(groups)) {
     if (!Object.values(content).some((field) => field.group === key)) continue;
     const button = element("button", title, key === group ? "active" : "");
     button.onclick = () => {
       group = key;
+      tab(false);
       renderFields();
     };
     $("groups").append(button);
@@ -139,7 +169,31 @@ function renderFields() {
     a.localeCompare(b, "en", { numeric: true }),
   )) {
     if (field.group !== group) continue;
-    const label = element("label", field.label);
+    fieldIndex++;
+    const card = element("div", undefined, "field-card");
+    const cardHeading = element("div", undefined, "field-card-heading");
+    const number = element(
+      "span",
+      String(fieldIndex).padStart(2, "0"),
+      "field-number",
+    );
+    const state = element("span", "", "field-state");
+    cardHeading.append(number, state);
+    card.append(cardHeading);
+    const caption =
+      fieldNames[key] ||
+      (field.label.length > 65 ? "Текстовый блок" : field.label);
+    const label = element("label", caption);
+    const syncState = () => {
+      const changed = field.value !== savedContent[key]?.value;
+      card.classList.toggle("is-edited", changed);
+      state.textContent = changed
+        ? "Изменено"
+        : field.type === "image"
+          ? "Изображение"
+          : `${field.value.length} симв.`;
+    };
+    syncState();
     if (field.type === "image") {
       const preview = element("img", undefined, "preview");
       preview.alt = field.label;
@@ -152,6 +206,7 @@ function renderFields() {
       };
       const input = element("input");
       input.type = "file";
+      input.setAttribute("aria-label", field.label);
       input.accept = "image/png,image/jpeg";
       input.onchange = async () => {
         const file = input.files[0];
@@ -168,6 +223,7 @@ function renderFields() {
           body.append("file", file);
           const result = await api("/admin/media", { method: "POST", body });
           content[key].value = result.url;
+          syncState();
           preview.src = result.url;
           preview.hidden = false;
           setDirty(true);
@@ -190,10 +246,12 @@ function renderFields() {
     } else {
       const input = element("textarea");
       input.value = field.value;
+      input.setAttribute("aria-label", field.label);
       input.maxLength = 10000;
-      input.rows = field.value.length > 140 ? 4 : 2;
+      input.rows = field.value.length > 140 ? 3 : 1;
       input.oninput = () => {
         content[key].value = input.value;
+        syncState();
         setDirty(
           Object.keys(content).some(
             (fieldKey) =>
@@ -203,12 +261,19 @@ function renderFields() {
       };
       label.append(input);
     }
-    $("fields").append(label);
+    card.append(label);
     if (field.type === "text")
-      $("fields").append(historyControls(key, label.querySelector("textarea")));
+      card.append(historyControls(key, label.querySelector("textarea")));
+    $("fields").append(card);
   }
 }
 function renderLeads() {
+  const metrics = [["Всего заявок", leads.length, "Все обращения с сайта", "total"], ["Новые", leads.filter(l => l.status === "new").length, "Ожидают вашего ответа", "new"], ["В работе", leads.filter(l => l.status === "progress").length, "Обсуждение проекта", "progress"], ["Завершены", leads.filter(l => l.status === "done").length, "Обработанные обращения", "done"]];
+  $("lead-stats").replaceChildren(...metrics.map(([title, count, note, kind]) => {
+    const card = element("div", undefined, `stat-card stat-${kind}`);
+    card.append(element("span", title, "stat-title"), element("strong", String(count)), element("small", note));
+    return card;
+  }));
   const search = $("search").value.toLocaleLowerCase("ru");
   const status = $("status-filter").value;
   $("count").textContent =
@@ -221,8 +286,10 @@ function renderLeads() {
         .toLocaleLowerCase("ru")
         .includes(search),
   );
+  $("results-count").textContent = `Показано ${filtered.length} из ${leads.length}`;
   for (const lead of filtered.toReversed()) {
     const card = element("article", undefined, "lead");
+    card.dataset.status = lead.status;
     const phone = element("a", lead.phone);
     phone.href = `tel:${lead.phone.replace(/[^+\d]/g, "")}`;
     const select = element("select");
@@ -253,13 +320,11 @@ function renderLeads() {
         select.disabled = false;
       }
     };
-    card.append(
-      element("small", new Date(lead.createdAt).toLocaleString("ru-RU")),
-      element("h2", lead.name),
-      phone,
-      element("p", lead.message || "Без описания проекта"),
-      select,
-    );
+    const client = element("div", undefined, "lead-client");
+    const avatar = element("span", lead.name.trim().slice(0, 1).toUpperCase() || "К", "client-avatar");
+    client.append(avatar, element("h2", lead.name));
+    card.append(client, phone, element("p", lead.message || "Без описания проекта"), select,
+      element("small", new Date(lead.createdAt).toLocaleString("ru-RU")));
     $("leads").append(card);
   }
   if (!filtered.length)
@@ -360,12 +425,16 @@ $("save").onclick = async () => {
 function tab(leadsVisible) {
   $("content-panel").hidden = leadsVisible;
   $("leads-panel").hidden = !leadsVisible;
-  $("content-tab").classList.toggle("active", !leadsVisible);
+  for (const button of $("groups").querySelectorAll("button")) {
+    button.classList.toggle(
+      "active",
+      !leadsVisible && button.textContent === groups[group],
+    );
+  }
   $("leads-tab").classList.toggle("active", leadsVisible);
   if (leadsVisible)
     refreshLeads().catch((error) => notice(error.message, true));
 }
-$("content-tab").onclick = () => tab(false);
 $("leads-tab").onclick = () => tab(true);
 $("refresh").onclick = () =>
   refreshLeads().catch((error) => notice(error.message, true));

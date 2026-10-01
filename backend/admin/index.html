@@ -21,8 +21,13 @@
       <a
         class="brand"
         href="/admin/"
-        >ZIRVA <span>Управление сайтом</span></a
-      ><button
+        ><img
+          src="logo.svg"
+          alt="Zirva Development"
+          width="68"
+          height="60"
+        /><span>Zirva<small>WORKSPACE</small></span></a
+      ><div class="header-context">Управление сайтом <span>/ Рабочее пространство</span></div><a class="site-link" href="/" target="_blank" rel="noopener">Открыть сайт ↗</a><button
         id="logout"
         hidden
       >
@@ -40,95 +45,116 @@
         class="login panel"
         hidden
       >
-        <span class="eyebrow">АДМИНИСТРАТОР</span>
-        <h1>Вход в админку</h1>
-        <label
-          >Логин<input
-            name="username"
-            autocomplete="username"
-            required
-            value="admin"
-        /></label>
-        <label
-          >Пароль<input
-            name="password"
-            type="password"
-            autocomplete="current-password"
-            required
-        /></label>
-        <button class="primary">Войти</button>
+        <div class="login-story">
+          <span class="eyebrow">ZIRVA DEVELOPMENT</span>
+          <h2>К новым<br /><span>вершинам.</span></h2>
+          <p>
+            Управляйте содержанием сайта.<br />Оставайтесь на связи с клиентами.
+          </p>
+          <span class="story-index">СОДЕРЖАНИЕ / ОБРАЩЕНИЯ / РАЗВИТИЕ</span>
+        </div>
+        <div class="login-fields">
+          <span class="eyebrow">ДОБРО ПОЖАЛОВАТЬ</span>
+          <h1>Вход в админку</h1>
+          <p class="login-note">Ваше пространство для работы с сайтом.</p>
+          <label
+            >Логин<input
+              name="username"
+              autocomplete="username"
+              required
+              value="admin"
+          /></label>
+          <label
+            >Пароль<input
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+          /></label>
+          <button class="primary">
+            Войти <span aria-hidden="true">↗</span>
+          </button>
+        </div>
       </form>
       <div
         id="workspace"
         hidden
       >
-        <nav
-          class="tabs"
-          aria-label="Разделы управления"
-        >
-          <button
-            id="content-tab"
-            class="active"
-          >
-            Тексты и фотографии
-          </button>
+        <div class="section-navigation">
+          <div class="workspace-label"><span class="workspace-avatar">Z</span><span>Zirva Development<small>Рабочее пространство</small></span></div><span class="nav-caption">ОБЗОР</span>
           <button id="leads-tab">Заявки <span id="count"></span></button>
-        </nav>
-        <section id="content-panel">
-          <div class="toolbar">
-            <div>
-              <h1>Содержание сайта</h1>
-              <p>
-                Правки появятся на сайте после сохранения и обновления страницы.
-              </p>
+          <span class="nav-caption sections-caption">СОДЕРЖАНИЕ САЙТА</span><aside
+            id="groups"
+            aria-label="Разделы сайта"
+          ></aside>
+          <p class="nav-note"><span class="online-dot"></span> Панель управления сайтом<br /><small>Zirva Development</small></p>
+        </div>
+        <div class="workspace-content">
+          <section id="content-panel">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">РАБОЧЕЕ ПРОСТРАНСТВО</span>
+                <h1>Содержание сайта</h1>
+                <p>
+                  Правки появятся на сайте после сохранения и обновления
+                  страницы.
+                </p>
+              </div>
+              <div class="save-actions">
+                <span
+                  id="save-state"
+                  role="status"
+                  >Все изменения сохранены</span
+                >
+                <button
+                  id="save"
+                  class="primary"
+                  disabled
+                >
+                  Сохранить изменения
+                </button>
+              </div>
             </div>
-            <button
-              id="save"
-              class="primary"
-              disabled
-            >
-              Сохранить изменения
-            </button>
-          </div>
-          <div class="editor">
-            <aside
-              id="groups"
-              aria-label="Разделы сайта"
-            ></aside>
-            <div
-              class="panel"
-              id="fields"
-            ></div>
-          </div>
-        </section>
-        <section
-          id="leads-panel"
-          hidden
-        >
-          <div class="toolbar">
-            <div>
-              <h1>Заявки на обсуждение проекта</h1>
-              <p>Новые обращения с формы сайта.</p>
+            <div class="editor">
+              <div
+                class="panel"
+                id="fields"
+              ></div>
             </div>
-            <button id="refresh">Обновить</button>
-          </div>
-          <div class="filters">
-            <input
-              id="search"
-              aria-label="Поиск заявок"
-              placeholder="Имя, телефон или текст заявки"
-            /><select
-              id="status-filter"
-              aria-label="Фильтр статуса"
-            >
-              <option value="">Все статусы</option>
-              <option value="new">Новые</option>
-              <option value="progress">В работе</option>
-              <option value="done">Завершены</option>
-            </select>
-          </div>
-          <div id="leads"></div>
-        </section>
+          </section>
+          <section
+            id="leads-panel"
+            hidden
+          >
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">ОБРАЩЕНИЯ КЛИЕНТОВ</span>
+                <h1>Заявки</h1>
+                <p>Все обращения с сайта и ход работы с ними.</p>
+              </div>
+              <button id="refresh">Обновить</button>
+            </div>
+            <div id="lead-stats" class="stats" aria-label="Статистика заявок"></div>
+            <div class="leads-table">
+            <div class="table-title"><h2>Все обращения</h2><span id="results-count"></span></div>
+            <div class="filters">
+              <input
+                id="search"
+                aria-label="Поиск заявок"
+                placeholder="Имя, телефон или текст заявки"
+              /><select
+                id="status-filter"
+                aria-label="Фильтр статуса"
+              >
+                <option value="">Все статусы</option>
+                <option value="new">Новые</option>
+                <option value="progress">В работе</option>
+                <option value="done">Завершены</option>
+              </select>
+            </div>
+            <div class="table-scroll"><div class="lead-columns" aria-hidden="true"><span>Клиент</span><span>Телефон</span><span>Описание проекта</span><span>Статус</span><span>Дата обращения</span></div><div id="leads"></div></div></div>
+          </section>
+        </div>
       </div>
     </main>
   </body>

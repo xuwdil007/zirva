@@ -282,7 +282,9 @@ func (a *App) handler() http.Handler {
 		w.Header().Set("Cache-Control", "public, max-age=31536000, immutable")
 		http.ServeFile(w, r, filepath.Join(a.dir, "uploads", name))
 	})
-	if assets := os.Getenv("ASSETS_DIR"); assets != "" {
+	// При наличии сборки её /assets содержит также JavaScript, CSS и шрифты.
+	// public/assets нужен только для предпросмотра изображений без сборки.
+	if assets := os.Getenv("ASSETS_DIR"); assets != "" && os.Getenv("SITE_DIR") == "" {
 		mux.Handle("GET /assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir(assets))))
 	}
 	admin, _ := fs.Sub(bundled, "admin")
