@@ -49,7 +49,12 @@ type TextRevision struct {
 	Version    int       `json:"version"`
 	ReplacedAt time.Time `json:"replacedAt"`
 }
+type Credentials struct {
+	Username     string `json:"username"`
+	PasswordHash []byte `json:"passwordHash"`
+}
 type State struct {
+	Account *Credentials              `json:"account,omitempty"`
 	History map[string][]TextRevision `json:"history,omitempty"`
 	Version int                       `json:"version"`
 	Content map[string]Field          `json:"content"`
@@ -89,15 +94,8 @@ func token() string {
 	return hex.EncodeToString(b)
 }
 func newApp(dir, user, password string, secure bool, origins string) (*App, error) {
-	if len(password) < 12 {
-		return nil, errors.New("ADMIN_PASSWORD: задайте пароль не короче 12 символов")
-	}
 	a := &App{dir: dir, username: user, secure: secure, sessions: make(map[[32]byte]Session), limits: make(map[string]Counter), origins: make(map[string]bool)}
 	var err error
-	a.password, err = bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	if err != nil {
-		return nil, err
-	}
 	for _, origin := range strings.Split(origins, ",") {
 		if origin = strings.TrimSpace(origin); origin != "" {
 			a.origins[origin] = true
@@ -122,10 +120,58 @@ func newApp(dir, user, password string, secure bool, origins string) (*App, erro
 	} else if !os.IsNotExist(err) {
 		return nil, err
 	}
+	if a.state.Account != nil {
+		if a.state.Account.Username == "" {
+			return nil, errors.New("повреждены учётные данные администратора")
+		}
+		if _, err := bcrypt.Cost(a.state.Account.PasswordHash); err != nil {
+			return nil, fmt.Errorf("повреждён хеш пароля: %w", err)
+		}
+		a.username = a.state.Account.Username
+		a.password = append([]byte(nil), a.state.Account.PasswordHash...)
+	} else {
+		if len([]rune(password)) < 4 || len(password) > 72 {
+			return nil, errors.New("ADMIN_PASSWORD: задайте пароль от 4 символов, не более 72 байт")
+		}
+		a.password, err = bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+		if err != nil {
+			return nil, err
+		}
+	}
 	// Новые поля из обновлённого сайта появляются без потери ранее сохранённых текстов.
 	for key, value := range a.schema {
 		if _, ok := a.state.Content[key]; !ok {
 			a.state.Content[key] = value
+		}
+	}
+	// Обновляем название бренда и прежний слоган также в сохранённом контенте.
+	// Остальные редакторские правки и загруженные изображения сохраняем.
+	brandName := regexp.MustCompile(`(?i)\b(ZIRVA)\s+DEVELOPMENT\b`)
+	brandChanged := false
+	for key, field := range a.state.Content {
+		if field.Type != "text" {
+			continue
+		}
+		updated := field
+		updated.Value = brandName.ReplaceAllString(field.Value, "$1")
+		updated.Label = brandName.ReplaceAllString(field.Label, "$1")
+		if key == "History.3" && strings.EqualFold(strings.TrimSpace(updated.Value), "Development") {
+			updated.Value = ""
+			updated.Label = a.schema[key].Label
+		}
+		if key == "Mission.6" {
+			updated.Value = strings.ReplaceAll(updated.Value, "БА ҚУЛЛАҲОИ НАВ", "К НОВЫМ ВЕРШИНАМ")
+			updated.Label = strings.ReplaceAll(updated.Label, "БА ҚУЛЛАҲОИ НАВ", "К НОВЫМ ВЕРШИНАМ")
+		}
+		if updated != field {
+			a.state.Content[key] = updated
+			brandChanged = true
+		}
+	}
+	if brandChanged {
+		a.state.Version++
+		if err = a.save(a.state); err != nil {
+			return nil, err
 		}
 	}
 	return a, nil
@@ -243,8 +289,9 @@ func (a *App) handler() http.Handler {
 		c, _ := r.Cookie("zirva_session")
 		a.mu.Lock()
 		s := a.sessions[sha256.Sum256([]byte(c.Value))]
+		username := a.username
 		a.mu.Unlock()
-		reply(w, 200, map[string]string{"csrf": s.CSRF, "username": a.username})
+		reply(w, 200, map[string]string{"csrf": s.CSRF, "username": username})
 	}))
 	mux.HandleFunc("POST /api/admin/logout", a.auth(func(w http.ResponseWriter, r *http.Request) {
 		c, _ := r.Cookie("zirva_session")
@@ -254,6 +301,7 @@ func (a *App) handler() http.Handler {
 		http.SetCookie(w, &http.Cookie{Name: "zirva_session", Value: "", Path: "/api/admin", MaxAge: -1, HttpOnly: true, Secure: a.secure, SameSite: http.SameSiteStrictMode})
 		reply(w, 200, map[string]bool{"ok": true})
 	}))
+	mux.HandleFunc("PUT /api/admin/account", a.auth(a.updateAccount))
 	mux.HandleFunc("PUT /api/admin/content", a.auth(a.updateContent))
 	mux.HandleFunc("GET /api/admin/history", a.auth(func(w http.ResponseWriter, r *http.Request) {
 		a.mu.Lock()
@@ -342,6 +390,8 @@ func (a *App) login(w http.ResponseWriter, r *http.Request) {
 	if !decode(w, r, &input, 4096) {
 		return
 	}
+	a.mu.Lock()
+	defer a.mu.Unlock()
 	err := bcrypt.CompareHashAndPassword(a.password, []byte(input.Password))
 	if err != nil || subtle.ConstantTimeCompare([]byte(input.Username), []byte(a.username)) != 1 {
 		fail(w, 401, "Неверный логин или пароль")
@@ -349,17 +399,67 @@ func (a *App) login(w http.ResponseWriter, r *http.Request) {
 	}
 	value, csrf := token(), token()
 	expires := time.Now().Add(12 * time.Hour)
-	a.mu.Lock()
 	for key, s := range a.sessions {
 		if time.Now().After(s.Expires) {
 			delete(a.sessions, key)
 		}
 	}
 	a.sessions[sha256.Sum256([]byte(value))] = Session{csrf, expires}
-	a.mu.Unlock()
 	http.SetCookie(w, &http.Cookie{Name: "zirva_session", Value: value, Path: "/api/admin", HttpOnly: true, Secure: a.secure, SameSite: http.SameSiteStrictMode, Expires: expires, MaxAge: 43200})
 	reply(w, 200, map[string]string{"csrf": csrf, "username": a.username})
 }
+func (a *App) updateAccount(w http.ResponseWriter, r *http.Request) {
+	if a.limited(r, "account", 10) {
+		fail(w, 429, "Слишком много попыток. Повторите через 10 минут")
+		return
+	}
+	var input struct {
+		Username        string `json:"username"`
+		CurrentPassword string `json:"currentPassword"`
+		Password        string `json:"password"`
+	}
+	if !decode(w, r, &input, 4096) {
+		return
+	}
+	input.Username = strings.TrimSpace(input.Username)
+	if !regexp.MustCompile(`^[a-zA-Z0-9_.@-]{3,64}$`).MatchString(input.Username) {
+		fail(w, 422, "Логин: от 3 до 64 символов, латинские буквы, цифры, точка, дефис, @ или _")
+		return
+	}
+	if len([]rune(input.Password)) < 4 || len(input.Password) > 72 {
+		fail(w, 422, "Новый пароль должен содержать минимум 4 символа и занимать не более 72 байт")
+		return
+	}
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	// Повторная проверка под блокировкой: параллельная смена могла завершить сессию.
+	cookie, _ := r.Cookie("zirva_session")
+	session, ok := a.sessions[sha256.Sum256([]byte(cookie.Value))]
+	if !ok || time.Now().After(session.Expires) {
+		fail(w, 401, "Войдите в админку")
+		return
+	}
+	if bcrypt.CompareHashAndPassword(a.password, []byte(input.CurrentPassword)) != nil {
+		fail(w, 403, "Текущий пароль указан неверно")
+		return
+	}
+	hash, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
+	if err != nil {
+		fail(w, 500, "Не удалось изменить пароль")
+		return
+	}
+	next := a.state
+	next.Account = &Credentials{Username: input.Username, PasswordHash: hash}
+	if err := a.save(next); err != nil {
+		fail(w, 500, "Не удалось сохранить учётные данные")
+		return
+	}
+	a.username, a.password = input.Username, hash
+	a.sessions = make(map[[32]byte]Session)
+	http.SetCookie(w, &http.Cookie{Name: "zirva_session", Value: "", Path: "/api/admin", MaxAge: -1, HttpOnly: true, Secure: a.secure, SameSite: http.SameSiteStrictMode})
+	reply(w, 200, map[string]bool{"ok": true})
+}
+
 func (a *App) createLead(w http.ResponseWriter, r *http.Request) {
 	if a.limited(r, "lead", 10) {
 		fail(w, 429, "Слишком много заявок. Повторите через 10 минут")

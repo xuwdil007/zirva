@@ -165,6 +165,16 @@ function renderFields() {
     };
     $("groups").append(button);
   }
+  const accountButton = element("button", "Логин и пароль");
+  accountButton.id = "account-tab";
+  accountButton.onclick = () => {
+    tab(false);
+    $("content-panel").hidden = true;
+    $("account-panel").hidden = false;
+    $("groups").querySelectorAll("button").forEach(button => button.classList.remove("active"));
+    accountButton.classList.add("active");
+  };
+  $("groups").append(accountButton);
   for (const [key, field] of Object.entries(content).sort(([a], [b]) =>
     a.localeCompare(b, "en", { numeric: true }),
   )) {
@@ -346,6 +356,7 @@ async function refreshLeads() {
 }
 async function enter(session) {
   csrf = session.csrf;
+  $("account-username").value = session.username;
   $("login").hidden = true;
   $("logout").hidden = false;
   $("workspace").hidden = false;
@@ -423,6 +434,7 @@ $("save").onclick = async () => {
   }
 };
 function tab(leadsVisible) {
+  $("account-panel").hidden = true;
   $("content-panel").hidden = leadsVisible;
   $("leads-panel").hidden = !leadsVisible;
   for (const button of $("groups").querySelectorAll("button")) {
@@ -452,3 +464,31 @@ api("/admin/session")
     $("login").hidden = false;
     if (!error.message.includes("Войдите")) notice(error.message, true);
   });
+
+$("account-form").onsubmit = async (event) => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const values = Object.fromEntries(new FormData(form));
+  const errorBox = $("account-error");
+  errorBox.hidden = true;
+  const showError = (message) => { errorBox.textContent = message; errorBox.hidden = false; };
+  if (values.password !== values.passwordConfirm) { showError("Новые пароли не совпадают."); return; }
+  if (new TextEncoder().encode(values.password).length > 72) { showError("Новый пароль должен занимать не более 72 байт."); return; }
+  if (dirty || pendingUploads > 0) { showError("Сначала сохраните изменения содержания сайта и дождитесь загрузки фотографий."); return; }
+  const button = form.querySelector("button");
+  button.disabled = true;
+  try {
+    await api("/admin/account", { method: "PUT", body: JSON.stringify({ username: values.username, currentPassword: values.currentPassword, password: values.password }) });
+    csrf = "";
+    form.reset();
+    $("workspace").hidden = true;
+    $("logout").hidden = true;
+    $("login").hidden = false;
+    $("login").reset();
+    $("login").elements.username.value = values.username.trim();
+    tab(false);
+    notice("Логин и пароль изменены. Войдите с новыми данными.");
+    $("login").elements.password.focus();
+  } catch (error) { showError(error.message); }
+  finally { button.disabled = false; }
+};

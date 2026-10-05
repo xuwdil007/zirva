@@ -71,7 +71,7 @@ try {
   const admin = await browser.newPage({ reducedMotion: "reduce" });
   admin.on("pageerror", (error) => errors.push(error.message));
   await admin.goto(`${base}/admin/`);
-  await admin.getByLabel("Пароль").fill(password);
+  await admin.locator("#login").getByLabel("Пароль", { exact: true }).fill(password);
   await admin.getByRole("button", { name: "Войти", exact: true }).click();
   await expect(
     admin.getByRole("heading", { name: "Содержание сайта" }),
@@ -194,10 +194,41 @@ try {
     "Строим будущее вместе.",
   );
   await admin.reload();
-  await admin.getByLabel("Пароль").fill(password);
+  await admin.locator("#login").getByLabel("Пароль", { exact: true }).fill(password);
   await admin.getByRole("button", { name: "Войти", exact: true }).click();
   await admin.getByRole("button", { name: /Заявки/ }).click();
   await expect(admin.locator(".lead select")).toHaveValue("progress");
+  await expect(admin.locator("#groups button").last()).toHaveText("Логин и пароль");
+  await admin.getByRole("button", { name: "Логин и пароль", exact: true }).click();
+  const account = admin.locator("#account-form");
+  await expect(account.getByLabel("Новый логин", {exact: true})).toHaveValue("admin");
+  const updatedPassword = randomBytes(2).toString("hex");
+  await account.getByLabel("Новый логин", {exact: true}).fill("new-admin");
+  await account.getByLabel("Текущий пароль", {exact: true}).fill(password);
+  await account.getByLabel("Новый пароль", {exact: true}).fill(updatedPassword);
+  await account.getByLabel("Повторите новый пароль", {exact: true}).fill(updatedPassword + "x");
+  await account.getByRole("button").click();
+  await expect(admin.locator("#account-error")).toHaveText("Новые пароли не совпадают.");
+  await account.getByLabel("Повторите новый пароль", {exact: true}).fill(updatedPassword);
+  await admin.setViewportSize({width:390,height:844});
+  assert.ok(await admin.evaluate(() => document.documentElement.scrollWidth <= innerWidth), "Account overflow");
+  await admin.screenshot({path:"artifacts/admin-account-mobile.png",fullPage:true});
+  await account.getByRole("button").click();
+  await expect(admin.locator("#login")).toBeVisible();
+  await expect(admin.locator("#login").getByLabel("Логин", {exact: true})).toHaveValue("new-admin");
+  await admin.locator("#login").getByLabel("Пароль", {exact: true}).fill(updatedPassword);
+  await admin.getByRole("button", { name: "Войти", exact: true }).click();
+  await expect(admin.locator("#workspace")).toBeVisible();
+  await stop();
+  await start();
+  await admin.reload();
+  await admin.locator("#login").getByLabel("Логин", {exact: true}).fill("new-admin");
+  await admin.locator("#login").getByLabel("Пароль", {exact: true}).fill(updatedPassword);
+  await admin.getByRole("button", { name: "Войти", exact: true }).click();
+  await expect(admin.locator("#workspace")).toBeVisible();
+  await admin.getByRole("button", {name:"Логин и пароль", exact:true}).click();
+  await admin.setViewportSize({width:1440,height:1000});
+  await admin.screenshot({path:"artifacts/admin-account.png",fullPage:true});
   assert.deepEqual(errors, []);
   console.log(
     "PASS: form → Go → admin; content and image editing; mobile layouts; failed request; restart persistence.",

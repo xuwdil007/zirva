@@ -8,6 +8,8 @@ import (
 	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"strings"
 	"sync"
 	"testing"
@@ -227,5 +229,124 @@ func TestTextHistory(t *testing.T) {
 	}
 	if payload.Defaults["seo.title"] != original {
 		t.Fatal("original text missing")
+	}
+}
+
+func TestBrandRefreshPreservesSavedContent(t *testing.T) {
+	a := testApp(t)
+	field := a.state.Content["About.1"]
+	field.Value = "ZIRVA Development — наш обновлённый текст"
+	field.Label = "ZIRVA DEVELOPMENT"
+	a.state.Content["About.1"] = field
+	slogan := a.state.Content["Mission.6"]
+	slogan.Value = "БА ҚУЛЛАҲОИ НАВ"
+	a.state.Content["Mission.6"] = slogan
+	photo := a.state.Content["images.logo"]
+	photo.Value = "/media/custom-logo.png"
+	a.state.Content["images.logo"] = photo
+	if err := a.save(a.state); err != nil {
+		t.Fatal(err)
+	}
+	before := a.state.Version
+	reopened, err := newApp(a.dir, "admin", "test-password-only-123", false, "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := reopened.state.Content["About.1"]; got.Value != "ZIRVA — наш обновлённый текст" || got.Label != "ZIRVA" {
+		t.Fatal(got)
+	}
+	if got := reopened.state.Content["Mission.6"].Value; got != "К НОВЫМ ВЕРШИНАМ" {
+		t.Fatal(got)
+	}
+	if reopened.state.Content["images.logo"] != photo {
+		t.Fatal("custom image changed")
+	}
+	if reopened.state.Version != before+1 {
+		t.Fatal("version not updated")
+	}
+	again, err := newApp(a.dir, "admin", "test-password-only-123", false, "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if again.state.Version != reopened.state.Version {
+		t.Fatal("migration repeated")
+	}
+}
+
+func TestAccountChange(t *testing.T) {
+	a := testApp(t)
+	cookie, csrf := loginTest(t, a)
+	otherCookie, _ := loginTest(t, a)
+	input := map[string]string{"username": "new-admin", "currentPassword": "test-password-only-123", "password": "abcd"}
+	if w := request(a, "PUT", "/api/admin/account", input, nil, ""); w.Code != 401 {
+		t.Fatal(w.Code)
+	}
+	if w := request(a, "PUT", "/api/admin/account", input, cookie, ""); w.Code != 403 {
+		t.Fatal(w.Code)
+	}
+	input["currentPassword"] = "incorrect"
+	if w := request(a, "PUT", "/api/admin/account", input, cookie, csrf); w.Code != 403 {
+		t.Fatal(w.Code)
+	}
+	input["currentPassword"] = "test-password-only-123"
+	for _, password := range []string{"abc", "яяя", strings.Repeat("я", 37)} {
+		input["password"] = password
+		if w := request(a, "PUT", "/api/admin/account", input, cookie, csrf); w.Code != 422 {
+			t.Fatal(w.Code)
+		}
+	}
+	input["password"] = "abcd"
+	input["username"] = "bad login"
+	if w := request(a, "PUT", "/api/admin/account", input, cookie, csrf); w.Code != 422 {
+		t.Fatal(w.Code)
+	}
+	input["username"] = "new-admin"
+	// Ошибка записи не должна менять действующий пароль или завершать сессию.
+	dir := a.dir
+	a.dir = dir + "/missing-directory"
+	if w := request(a, "PUT", "/api/admin/account", input, cookie, csrf); w.Code != 500 {
+		t.Fatal(w.Code)
+	}
+	a.dir = dir
+	if a.username != "admin" || a.state.Account != nil {
+		t.Fatal("credentials changed after failed write")
+	}
+	if w := request(a, "GET", "/api/admin/session", nil, cookie, ""); w.Code != 200 {
+		t.Fatal(w.Code)
+	}
+	if w := request(a, "PUT", "/api/admin/account", input, cookie, csrf); w.Code != 200 {
+		t.Fatal(w.Code, w.Body.String())
+	}
+	for _, oldCookie := range []*http.Cookie{cookie, otherCookie} {
+		if w := request(a, "GET", "/api/admin/session", nil, oldCookie, ""); w.Code != 401 {
+			t.Fatal("old session accepted")
+		}
+	}
+	if w := request(a, "POST", "/api/admin/login", map[string]string{"username": "admin", "password": "test-password-only-123"}, nil, ""); w.Code != 401 {
+		t.Fatal("old login accepted")
+	}
+	if w := request(a, "POST", "/api/admin/login", map[string]string{"username": "new-admin", "password": "abcd"}, nil, ""); w.Code != 200 {
+		t.Fatal(w.Code)
+	}
+	public := request(a, "GET", "/api/content", nil, nil, "").Body.String()
+	if strings.Contains(public, "passwordHash") || strings.Contains(public, "new-admin") {
+		t.Fatal("account leaked in public API")
+	}
+	stored, err := os.ReadFile(filepath.Join(dir, "state.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if bytes.Contains(stored, []byte(input["password"])) || bytes.Contains(stored, []byte(input["currentPassword"])) {
+		t.Fatal("plaintext password on disk")
+	}
+	reopened, err := newApp(dir, "admin", "", false, "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if w := request(reopened, "POST", "/api/admin/login", map[string]string{"username": "new-admin", "password": "abcd"}, nil, ""); w.Code != 200 {
+		t.Fatal("new login lost after restart", w.Code)
+	}
+	if w := request(reopened, "POST", "/api/admin/login", map[string]string{"username": "admin", "password": "test-password-only-123"}, nil, ""); w.Code != 401 {
+		t.Fatal("old login restored on restart")
 	}
 }

@@ -9,8 +9,7 @@ export default function History() {
         <span className="eyebrow">{t("History.1")}</span>
         <h3 id="history-title">
           {t("History.2")}
-          <br />
-          {t("History.3")}
+          {t("History.3") && <><br />{t("History.3")}</>}
         </h3>
         <div className="company-history-intro">
           <p className="company-history-motto">

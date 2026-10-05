@@ -23,7 +23,7 @@
         href="/admin/"
         ><img
           src="logo.svg"
-          alt="Zirva Development"
+          alt="Zirva"
           width="68"
           height="60"
         /><span>Zirva<small>WORKSPACE</small></span></a
@@ -46,7 +46,7 @@
         hidden
       >
         <div class="login-story">
-          <span class="eyebrow">ZIRVA DEVELOPMENT</span>
+          <span class="eyebrow">ZIRVA</span>
           <h2>К новым<br /><span>вершинам.</span></h2>
           <p>
             Управляйте содержанием сайта.<br />Оставайтесь на связи с клиентами.
@@ -81,13 +81,13 @@
         hidden
       >
         <div class="section-navigation">
-          <div class="workspace-label"><span class="workspace-avatar">Z</span><span>Zirva Development<small>Рабочее пространство</small></span></div><span class="nav-caption">ОБЗОР</span>
+          <div class="workspace-label"><span class="workspace-avatar">Z</span><span>Zirva<small>Рабочее пространство</small></span></div><span class="nav-caption">ОБЗОР</span>
           <button id="leads-tab">Заявки <span id="count"></span></button>
           <span class="nav-caption sections-caption">СОДЕРЖАНИЕ САЙТА</span><aside
             id="groups"
             aria-label="Разделы сайта"
           ></aside>
-          <p class="nav-note"><span class="online-dot"></span> Панель управления сайтом<br /><small>Zirva Development</small></p>
+          <p class="nav-note"><span class="online-dot"></span> Панель управления сайтом<br /><small>Zirva</small></p>
         </div>
         <div class="workspace-content">
           <section id="content-panel">
@@ -153,6 +153,18 @@
               </select>
             </div>
             <div class="table-scroll"><div class="lead-columns" aria-hidden="true"><span>Клиент</span><span>Телефон</span><span>Описание проекта</span><span>Статус</span><span>Дата обращения</span></div><div id="leads"></div></div></div>
+          </section>
+          <section id="account-panel" hidden>
+            <div class="toolbar"><div><span class="eyebrow">УЧЁТНАЯ ЗАПИСЬ</span><h1>Логин и пароль</h1><p>Измените данные для входа в панель управления.</p></div></div>
+            <form id="account-form" class="field-card account-form">
+              <label>Новый логин<input id="account-username" aria-label="Новый логин" name="username" autocomplete="username" required minlength="3" maxlength="64" pattern="[a-zA-Z0-9_.@\-]{3,64}" /><small>3–64 символа: латинские буквы, цифры, точка, дефис, @ или _.</small></label>
+              <label>Текущий пароль<input name="currentPassword" type="password" autocomplete="current-password" required /></label>
+              <label>Новый пароль<input aria-label="Новый пароль" name="password" type="password" autocomplete="new-password" required minlength="4" /><small>Минимум 4 символа, максимум 72 байта. Русские буквы занимают больше одного байта.</small></label>
+              <label>Повторите новый пароль<input name="passwordConfirm" type="password" autocomplete="new-password" required minlength="4" /></label>
+              <p>После сохранения все сеансы завершатся. Войдите снова с новым логином и паролем.</p>
+              <p id="account-error" role="alert" hidden></p>
+              <button class="primary" type="submit">Сохранить логин и пароль</button>
+            </form>
           </section>
         </div>
       </div>

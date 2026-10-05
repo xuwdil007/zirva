@@ -8,7 +8,7 @@ if (existsSync(path.join(root, ".env")))
   process.loadEnvFile(path.join(root, ".env"));
 if (!process.env.ADMIN_PASSWORD) {
   console.error(
-    "Скопируйте .env.example в .env и задайте ADMIN_PASSWORD (не меньше 12 символов).",
+    "Скопируйте .env.example в .env и задайте ADMIN_PASSWORD (не меньше 4 символов).",
   );
   process.exit(1);
 }

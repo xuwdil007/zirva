@@ -24,8 +24,8 @@
     "group": "About"
   },
   "About.4": {
-    "label": "ZIRVA DEVELOPMENT",
-    "value": "ZIRVA DEVELOPMENT",
+    "label": "ZIRVA",
+    "value": "ZIRVA",
     "type": "text",
     "group": "About"
   },
@@ -48,8 +48,8 @@
     "group": "About"
   },
   "About.8": {
-    "label": "ZIRVA Development — единый центр реализации строительных и инфраструктурных проектов ",
-    "value": "ZIRVA Development — единый центр реализации строительных и инфраструктурных проектов Группы компаний «КОИНОТИ НАВ».",
+    "label": "ZIRVA — единый центр реализации строительных и инфраструктурных проектов ",
+    "value": "ZIRVA — единый центр реализации строительных и инфраструктурных проектов Группы компаний «КОИНОТИ НАВ».",
     "type": "text",
     "group": "About"
   },
@@ -312,8 +312,8 @@
     "group": "Footer"
   },
   "Footer.2": {
-    "label": "ZIRVA Development",
-    "value": "ZIRVA Development",
+    "label": "ZIRVA",
+    "value": "ZIRVA",
     "type": "text",
     "group": "Footer"
   },
@@ -354,8 +354,8 @@
     "group": "Footer"
   },
   "Footer.9": {
-    "label": "ZIRVA Development",
-    "value": "ZIRVA Development",
+    "label": "ZIRVA",
+    "value": "ZIRVA",
     "type": "text",
     "group": "Footer"
   },
@@ -378,14 +378,14 @@
     "group": "Footer"
   },
   "Header.1": {
-    "label": "ZIRVA Development — главная",
-    "value": "ZIRVA Development — главная",
+    "label": "ZIRVA — главная",
+    "value": "ZIRVA — главная",
     "type": "text",
     "group": "Header"
   },
   "Header.2": {
-    "label": "ZIRVA Development",
-    "value": "ZIRVA Development",
+    "label": "ZIRVA",
+    "value": "ZIRVA",
     "type": "text",
     "group": "Header"
   },
@@ -456,8 +456,8 @@
     "group": "Hero"
   },
   "Hero.7": {
-    "label": "TOWARD NEW HEIGHTS — ZIRVA DEVELOPMENT",
-    "value": "TOWARD NEW HEIGHTS — ZIRVA DEVELOPMENT",
+    "label": "TOWARD NEW HEIGHTS — ZIRVA",
+    "value": "TOWARD NEW HEIGHTS — ZIRVA",
     "type": "text",
     "group": "Hero"
   },
@@ -474,8 +474,8 @@
     "group": "History"
   },
   "History.3": {
-    "label": "Development",
-    "value": "Development",
+    "label": "Продолжение заголовка истории",
+    "value": "",
     "type": "text",
     "group": "History"
   },
@@ -493,13 +493,13 @@
   },
   "History.6": {
     "label": "Наш путь начался с ремонта и строительства объектов Группы компаний «КОИНОТИ НАВ». Ро",
-    "value": "Наш путь начался с ремонта и строительства объектов Группы компаний «КОИНОТИ НАВ». Рост проектов стал основой для создания самостоятельной платформы ZIRVA Development.",
+    "value": "Наш путь начался с ремонта и строительства объектов Группы компаний «КОИНОТИ НАВ». Рост проектов стал основой для создания самостоятельной платформы ZIRVA.",
     "type": "text",
     "group": "History"
   },
   "History.7": {
-    "label": "ZIRVA Development выросла из внутреннего направления Группы компаний «КОИНОТИ НАВ».",
-    "value": "ZIRVA Development выросла из внутреннего направления Группы компаний «КОИНОТИ НАВ».",
+    "label": "ZIRVA выросла из внутреннего направления Группы компаний «КОИНОТИ НАВ».",
+    "value": "ZIRVA выросла из внутреннего направления Группы компаний «КОИНОТИ НАВ».",
     "type": "text",
     "group": "History"
   },
@@ -516,8 +516,8 @@
     "group": "History"
   },
   "History.10": {
-    "label": "Сегодня ZIRVA Development — единый центр реализации строительных и инфраструктурных п",
-    "value": "Сегодня ZIRVA Development — единый центр реализации строительных и инфраструктурных проектов Группы компаний «КОИНОТИ НАВ».",
+    "label": "Сегодня ZIRVA — единый центр реализации строительных и инфраструктурных п",
+    "value": "Сегодня ZIRVA — единый центр реализации строительных и инфраструктурных проектов Группы компаний «КОИНОТИ НАВ».",
     "type": "text",
     "group": "History"
   },
@@ -552,8 +552,8 @@
     "group": "Mission"
   },
   "Mission.6": {
-    "label": "БА ҚУЛЛАҲОИ НАВ",
-    "value": "БА ҚУЛЛАҲОИ НАВ",
+    "label": "К НОВЫМ ВЕРШИНАМ",
+    "value": "К НОВЫМ ВЕРШИНАМ",
     "type": "text",
     "group": "Mission"
   },
@@ -924,7 +924,7 @@
     "group": "History"
   },
   "seo.description": {
-    "value": "ZIRVA Development — строительная и девелоперская платформа Группы компаний «КОИНОТИ НАВ». Управляем строительством от задачи до сдачи. Душанбе, Таджикистан.",
+    "value": "ZIRVA — строительная и девелоперская платформа Группы компаний «КОИНОТИ НАВ». Управляем строительством от задачи до сдачи. Душанбе, Таджикистан.",
     "label": "Описание сайта",
     "type": "text",
     "group": "SEO"
