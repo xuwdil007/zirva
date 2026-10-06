@@ -350,3 +350,33 @@ func TestAccountChange(t *testing.T) {
 		t.Fatal("old login restored on restart")
 	}
 }
+
+func TestLeadLifecyclePersistence(t *testing.T) {
+	a := testApp(t)
+	cookie, csrf := loginTest(t, a)
+	created := request(a, "POST", "/api/leads", map[string]string{"name": "Клиент", "phone": "123456789"}, nil, "")
+	if created.Code != 201 {
+		t.Fatal(created.Code)
+	}
+	original := a.state.Leads[0]
+	endpoint := "/api/admin/leads/" + original.ID
+	if w := request(a, "PATCH", endpoint, map[string]string{"lifecycle": "deleted"}, nil, ""); w.Code != 401 {
+		t.Fatal(w.Code)
+	}
+	if w := request(a, "PATCH", endpoint, map[string]string{"lifecycle": "unknown"}, cookie, csrf); w.Code != 422 {
+		t.Fatal(w.Code)
+	}
+	for _, lifecycle := range []string{"draft", "deleted", "active"} {
+		if w := request(a, "PATCH", endpoint, map[string]string{"lifecycle": lifecycle}, cookie, csrf); w.Code != 200 {
+			t.Fatal(w.Code, w.Body.String())
+		}
+		restored, err := newApp(a.dir, "admin", "test-password-only-123", false, "")
+		if err != nil {
+			t.Fatal(err)
+		}
+		got := restored.state.Leads[0]
+		if got.Lifecycle != lifecycle || got.Status != original.Status || !got.CreatedAt.Equal(original.CreatedAt) || got.ID != original.ID {
+			t.Fatal(got)
+		}
+	}
+}

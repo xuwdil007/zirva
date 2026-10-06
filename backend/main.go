@@ -37,6 +37,7 @@ type Field struct {
 	Group string `json:"group"`
 }
 type Lead struct {
+	Lifecycle string    `json:"lifecycle,omitempty"`
 	ID        string    `json:"id"`
 	Name      string    `json:"name"`
 	Phone     string    `json:"phone"`
@@ -496,13 +497,18 @@ func (a *App) createLead(w http.ResponseWriter, r *http.Request) {
 }
 func (a *App) updateLead(w http.ResponseWriter, r *http.Request) {
 	var input struct {
-		Status string `json:"status"`
+		Status    string `json:"status"`
+		Lifecycle string `json:"lifecycle"`
 	}
 	if !decode(w, r, &input, 1024) {
 		return
 	}
-	if input.Status != "new" && input.Status != "progress" && input.Status != "done" {
+	if (input.Status == "" && input.Lifecycle == "") || (input.Status != "" && input.Status != "new" && input.Status != "progress" && input.Status != "done") {
 		fail(w, 422, "Неизвестный статус")
+		return
+	}
+	if input.Lifecycle != "" && input.Lifecycle != "active" && input.Lifecycle != "draft" && input.Lifecycle != "deleted" {
+		fail(w, 422, "Неизвестное действие")
 		return
 	}
 	a.mu.Lock()
@@ -511,7 +517,12 @@ func (a *App) updateLead(w http.ResponseWriter, r *http.Request) {
 	next.Leads = append([]Lead{}, a.state.Leads...)
 	for i := range next.Leads {
 		if next.Leads[i].ID == r.PathValue("id") {
-			next.Leads[i].Status = input.Status
+			if input.Status != "" {
+				next.Leads[i].Status = input.Status
+			}
+			if input.Lifecycle != "" {
+				next.Leads[i].Lifecycle = input.Lifecycle
+			}
 			if err := a.save(next); err != nil {
 				fail(w, 500, "Не удалось сохранить статус")
 				return

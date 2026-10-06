@@ -297,9 +297,12 @@ function renderLeads() {
         .includes(search),
   );
   $("results-count").textContent = `Показано ${filtered.length} из ${leads.length}`;
-  for (const lead of filtered.toReversed()) {
+  const inactive = lead => lead.lifecycle === "draft" || lead.lifecycle === "deleted";
+  filtered.sort((a, b) => Number(inactive(a)) - Number(inactive(b)) || new Date(b.createdAt) - new Date(a.createdAt) || b.id.localeCompare(a.id));
+  for (const lead of filtered) {
     const card = element("article", undefined, "lead");
     card.dataset.status = lead.status;
+    card.dataset.lifecycle = lead.lifecycle || "active";
     const phone = element("a", lead.phone);
     phone.href = `tel:${lead.phone.replace(/[^+\d]/g, "")}`;
     const select = element("select");
@@ -310,31 +313,43 @@ function renderLeads() {
       select.append(option);
     }
     select.value = lead.status;
-    select.onchange = async () => {
-      select.disabled = true;
+    select.className = "lead-status";
+    const action = element("select", undefined, "lead-action");
+    action.setAttribute("aria-label", `Действие с заявкой: ${lead.name}`);
+    const current = element("option", "Действия");
+    current.value = "";
+    current.disabled = true;
+    action.append(current);
+    for (const [value, title] of [["draft", "Черновик"], ["deleted", "Удалить"], ["active", "Возобновить"]]) {
+      const option = element("option", title);
+      option.value = value;
+      action.append(option);
+    }
+    action.value = inactive(lead) ? lead.lifecycle : "";
+    const update = async (changes, message) => {
+      select.disabled = action.disabled = true;
       leadsRequest++;
       try {
-        await api(`/admin/leads/${lead.id}`, {
-          method: "PATCH",
-          body: JSON.stringify({ status: select.value }),
+        const updated = await api(`/admin/leads/${lead.id}`, {
+          method: "PATCH", body: JSON.stringify(changes),
         });
-        leads = leads.map((entry) =>
-          entry.id === lead.id ? { ...entry, status: select.value } : entry,
-        );
+        leadsRequest++;
+        leads = leads.map(entry => entry.id === lead.id ? updated : entry);
         renderLeads();
-        notice("Статус сохранён");
+        notice(message);
       } catch (error) {
         select.value = lead.status;
+        action.value = inactive(lead) ? lead.lifecycle : "";
         notice(error.message, true);
-      } finally {
-        select.disabled = false;
-      }
+      } finally { select.disabled = action.disabled = false; }
     };
+    select.onchange = () => update({status: select.value}, "Статус сохранён");
+    action.onchange = () => update({lifecycle: action.value}, action.value === "active" ? "Заявка возобновлена" : "Заявка перемещена вниз списка");
     const client = element("div", undefined, "lead-client");
     const avatar = element("span", lead.name.trim().slice(0, 1).toUpperCase() || "К", "client-avatar");
     client.append(avatar, element("h2", lead.name));
     card.append(client, phone, element("p", lead.message || "Без описания проекта"), select,
-      element("small", new Date(lead.createdAt).toLocaleString("ru-RU")));
+      element("small", new Date(lead.createdAt).toLocaleString("ru-RU")), action);
     $("leads").append(card);
   }
   if (!filtered.length)
