@@ -179,6 +179,18 @@ try {
   }
   await admin.screenshot({ path: "artifacts/admin-leads-mobile.png", fullPage: true });
 
+  // Ошибка сервера должна объяснять причину и сохранять введённые данные.
+  await site.route("**/api/leads", route => route.fulfill({
+    status: 429, contentType: "application/json",
+    body: JSON.stringify({error:"Слишком много заявок. Повторите через 10 минут"}),
+  }));
+  await site.getByLabel("Ваше имя").fill("Проверка лимита");
+  await site.getByLabel("Телефон", {exact:false}).fill("+992900000003");
+  await site.getByRole("button", {name:"Отправить заявку"}).click();
+  await expect(site.getByRole("alert")).toHaveText("Слишком много заявок. Повторите через 10 минут");
+  await expect(site.getByLabel("Ваше имя")).toHaveValue("Проверка лимита");
+  await site.unroute("**/api/leads");
+
   // Недоступный API не должен показывать ложное сообщение об успешной отправке.
   await site.route("**/api/leads", (route) => route.abort());
   await site.getByLabel("Ваше имя").fill("Повторный клиент");

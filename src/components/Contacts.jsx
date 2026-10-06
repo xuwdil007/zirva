@@ -6,10 +6,12 @@ import SectionHeading from "./SectionHeading";
 export default function Contacts() {
   const company = getCompany();
   const [status, setStatus] = useState("idle");
+  const [errorMessage, setErrorMessage] = useState("");
   const sending = useRef(false);
   async function submit(event) {
     event.preventDefault();
     if (sending.current) return;
+    setErrorMessage("");
     const form = event.currentTarget;
     const data = new FormData(form);
     const phone = String(data.get("contact")).trim();
@@ -32,8 +34,11 @@ export default function Contacts() {
         }),
         signal: AbortSignal.timeout(15000),
       });
-      const result = await response.json();
-      if (!response.ok || !result.id) throw new Error("Submission failed");
+      const result = await response.json().catch(() => null);
+      if (!response.ok || !result?.id) {
+        if (typeof result?.error === "string") setErrorMessage(result.error);
+        throw new Error("Submission failed");
+      }
       form.reset();
       setStatus("success");
     } catch {
@@ -148,7 +153,7 @@ export default function Contacts() {
           )}
           {(status === "error" || status === "invalid") && (
             <p className="form-error" role="alert">
-              {t(status === "invalid" ? "Contacts.invalid" : "Contacts.error")}
+              {status === "invalid" ? t("Contacts.invalid") : errorMessage || t("Contacts.error")}
             </p>
           )}
         </form>
